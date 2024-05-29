@@ -20,8 +20,9 @@
    In the upper-right corner of any page, click your profile photo, then click **Settings**. In the "Access" section of the sidebar, click **SSH and GPG keys**.
 
    <img src="./GitHub%20Key-Based%20SSH%20Authentication.assets/github-user-profile.jpg" alt="github-user-profile" style="zoom: 50%;" />
-   <img src="./GitHub%20Key-Based%20SSH%20Authentication.assets/select-ssh-n-gpg-keys.jpg" alt="select-ssh-n-gpg-keys" style="zoom: 50%;" />
-   Click on green "New SSH key" button to add your public key (the content of .pub file)
+   <img src="./GitHub%20Key-Based%20SSH%20Authentication.assets/select-ssh-n-gpg-keys.jpg" alt="select-ssh-n-gpg-keys" style="zoom: 33%;" /> 
+
+Click on green "New SSH key" button to add your public key (the content of .pub file)
    <img src="./GitHub%20Key-Based%20SSH%20Authentication.assets/paste-pub-key.jpg" alt="paste-pub-key" style="zoom:50%;" />
    Verify the key fingerprint
    <img src="./GitHub%20Key-Based%20SSH%20Authentication.assets/match-fingerprints.jpg" alt="match-fingerprints" style="zoom:50%;" /> 
@@ -58,7 +59,7 @@
 
    <img src="./GitHub%20Key-Based%20SSH%20Authentication.assets/ssh-id-added.jpg" alt="ssh-id-added" style="zoom:50%;" /> 
 
-6. Set your user name and email address for Git commit.
+6. Set your user name and email address for Git commit on the client.
    https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup
 
    ```shell
