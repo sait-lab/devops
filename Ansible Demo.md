@@ -35,7 +35,7 @@ pip 21.2.3 from /usr/lib/python3.9/site-packages/pip (python 3.9)
 
 ##### Installing Ansible
 
-Use `pip` in your selected Python environment (https://docs.python.org/3/library/venv.html) to install the full Ansible package for the current user:
+Use `pip` in your selected Python environment (https://docs.python.org/3/library/venv.html, https://github.com/pyenv/pyenv, https://conda.io/projects/conda/en/latest/index.html, https://github.com/mamba-org/mamba) to install the full Ansible package for the current user:
 
 ```shell
 python3 -m pip install --user ansible
@@ -74,12 +74,14 @@ ansible [core 2.15.12]
 Add `ansible-node1`, `ansible-node2` to `/etc/hosts`
 
 ```
-192.168.0.39 ansible-controller
-IP_ADDRESS_OR_FQDN_OF_NODE1 ansible-node1
-IP_ADDRESS_OR_FQDN_OF_NODE2 ansible-node2
+IP_ADDRESS_OF_CONTROLNODE ansible-controlnode
+IP_ADDRESS_OF_NODE1 ansible-node1
+IP_ADDRESS_OF_NODE2 ansible-node2
 ```
 
 `ssh` into both nodes.
+
+
 
 ---
 
@@ -102,9 +104,12 @@ ansible-node1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key
 ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/srv_id_ed25519
 ```
 
+```shell
+# ansible ping all nodes
+ansible all -m ping -i inventory.ini
 ```
-$ # ansible ping all nodes
-$ ansible all -m ping -i inventory.ini
+
+```
 ansible-node1 | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
@@ -119,9 +124,13 @@ ansible-node2 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
+```
+```shell
+# ansible ping one node
+ansible ansible-node1 -m ping -i inventory.ini
+```
 
-$ # ansible ping one node
-$ ansible ansible-node1 -m ping -i inventory.ini
+```
 ansible-node1 | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3"
@@ -131,9 +140,9 @@ ansible-node1 | SUCCESS => {
 }
 ```
 
-The headings in brackets are group names. Dash ("-") is invalid.
-
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#valid-variable-names
+
+Note: The headings in brackets are group names. **Dash ("-") is invalid**.
 
 `inventory.ini` with groups:
 
@@ -234,9 +243,11 @@ total 4
   - name: verify host connectivity
     ping:
 ```
-
+```shell
+# Use ping in playbook
+ansible-playbook playbook1.yaml -i inventory.ini --verbose
 ```
-$ ansible-playbook playbook1.yaml -i inventory.ini --verbose
+```
 No config file found; using defaults
 
 PLAY [play-demo] ************************************************************
@@ -715,9 +726,6 @@ ansible-playbook playbook8.yaml
 ```
 
 ```
-[WARNING]: No inventory was parsed, only implicit localhost is available
-[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'
-
 PLAY [Hello World] **********************************************************************************************************
 
 TASK [Loop demo] ************************************************************************************************************
@@ -731,8 +739,37 @@ ok: [localhost] => (item=test3) => {
     "msg": "test3"
 }
 
+TASK [Registering var with a loop demo] *************************************************************************************
+ok: [localhost] => (item={'msg': 'test1', 'failed': False, 'changed': False, 'item': 'test1', 'ansible_loop_var': 'item'}) => {
+    "msg": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "failed": false,
+        "item": "test1",
+        "msg": "test1"
+    }
+}
+ok: [localhost] => (item={'msg': 'test2', 'failed': False, 'changed': False, 'item': 'test2', 'ansible_loop_var': 'item'}) => {
+    "msg": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "failed": false,
+        "item": "test2",
+        "msg": "test2"
+    }
+}
+ok: [localhost] => (item={'msg': 'test3', 'failed': False, 'changed': False, 'item': 'test3', 'ansible_loop_var': 'item'}) => {
+    "msg": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "failed": false,
+        "item": "test3",
+        "msg": "test3"
+    }
+}
+
 PLAY RECAP ******************************************************************************************************************
-localhost                  : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
 
