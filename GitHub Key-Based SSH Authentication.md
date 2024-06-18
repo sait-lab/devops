@@ -1,6 +1,6 @@
 ## GitHub Key-Based SSH Authentication
 
-
+https://github.com/sait-lab/devops/assets/81775267/9268b544-0b87-4dd7-a7a7-40e061061be8
 
 1. Generate an ed25519 key pair on the client. Use a meaningful file name instead of default one.
    [Generating a new SSH key and adding it to the ssh-agent - GitHub Docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
