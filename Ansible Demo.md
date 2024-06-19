@@ -1,3 +1,7 @@
+##### Introduction
+
+This demo presumes familiarity with SSH key-based authentication. The lab setup includes one AlmaLinux 9.4 serving as the Ansible control node and two Ubuntu 24.04 LTS instances as the managed nodes.
+
 ##### Ansible installation guide
 
 https://docs.ansible.com/ansible/latest/installation_guide/index.html
@@ -100,8 +104,8 @@ touch ~/ansible-demo/inventory/inventory.ini
 `inventory.ini`:
 
 ```ini
-ansible-node1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/srv_id_ed25519
-ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/srv_id_ed25519
+ansible-node1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
+ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 ```
 
 ```shell
@@ -148,10 +152,10 @@ Note: The headings in brackets are group names. **Dash ("-") is invalid**.
 
 ```ini
 [web_srv_1]
-ansible-node1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/srv_id_ed25519
+ansible-node1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 
 [web_srv_2]
-ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/srv_id_ed25519
+ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 ```
 ```shell
 # ping managed nodes in web_srv_1 group
@@ -173,9 +177,9 @@ If you have a lot of hosts with a similar pattern, you can add them as a range r
 
 ```ini
 [web_srv]
-ansible-node[1:2] ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/srv_id_ed25519
+ansible-node[1:2] ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 
-#ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/srv_id_ed25519
+#ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 ```
 
 
@@ -206,7 +210,7 @@ Host ansible-node1
   HostName                  IP_ADDRESS_OR_FQDN_OF_NODE1
   Port                      22
   User                      ubuntu
-  IdentityFile              ~/.ssh/srv_id_ed25519
+  IdentityFile              ~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
   ServerAliveInterval       5
   ExitOnForwardFailure      yes
 
@@ -214,7 +218,7 @@ Host ansible-node2
   HostName                  IP_ADDRESS_OR_FQDN_OF_NODE2
   Port                      22
   User                      ubuntu
-  IdentityFile              ~/.ssh/srv_id_ed25519
+  IdentityFile              ~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
   ServerAliveInterval       5
   ExitOnForwardFailure      yes
 ```
