@@ -18,8 +18,12 @@ Python 3.9.18
 ```
 
 ```shell
-# Install Python package installer
+# Install Python package installer on RHEL/AlmaLinux/Rocky Linux
 sudo dnf install python3-pip
+```
+```shell
+# Install Python package installer on Ubuntu/Debian
+sudo apt-get install -y python3-pip
 ```
 
 ```shell
@@ -50,9 +54,31 @@ python3 -m pip install --user ansible
 To upgrade an existing Ansible installation in this Python environment to the latest released version, simply add `--upgrade` to the command above:
 
 ```shell
+# Install Ansible on RHEL/AlmaLinux/Rocky Linux
 python3 -m pip install --upgrade --user ansible
 ```
+```
+# Create a work directory and enter it
+mkdir ~/ansible && cd ~/ansible
 
+# Create a virtual environment
+python3 -m venv venv-ansible
+
+# Activate virtual environment
+. venv-ansible/bin/activate
+# Or
+. ~/ansible/venv-ansible/bin/activate
+# Or
+source venv-ansible/bin/activate
+# Or
+source ~/ansible/venv-ansible/bin/activate
+
+# Upgrade pip
+python -m pip install --upgrade pip
+
+# Install Ansible
+python -m pip install ansible
+```
 ```shell
 # Show Ansible's version number, config file location, configured module search path,
 # module location, executable location and exit
@@ -60,13 +86,13 @@ ansible --version
 ```
 
 ```
-ansible [core 2.15.12]
+ansible [core 2.17.1]
   config file = None
   configured module search path = ['/home/alma/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
   ansible python module location = /home/alma/.local/lib/python3.9/site-packages/ansible
   ansible collection location = /home/alma/.ansible/collections:/usr/share/ansible/collections
   executable location = /home/alma/.local/bin/ansible
-  python version = 3.9.18 (main, Jan 24 2024, 00:00:00) [GCC 11.4.1 20231218 (Red Hat 11.4.1-3)] (/usr/bin/python3)
+  python version = 3.x.x (main, Jan 24 2024, 00:00:00) [GCC 11.4.1 20231218 (Red Hat 11.4.1-3)] (/usr/bin/python3)
   jinja version = 3.1.4
   libyaml = True
 ```
