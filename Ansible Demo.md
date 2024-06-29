@@ -28,7 +28,6 @@
          * [The configuration file](#the-configuration-file)
       * [ansible.builtin.copy module – Copy files to remote locations](#ansiblebuiltincopy-module--copy-files-to-remote-locations)
       * [Understanding privilege escalation: become](#understanding-privilege-escalation-become)
-            * [ansible.builtin.apt module](#ansiblebuiltinapt-module)
 
 
 ---
@@ -1136,9 +1135,9 @@ demo
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
 
-Ansible uses existing privilege escalation systems to execute tasks with root privileges or with another user’s permissions. Because this feature allows you to ‘become’ another user, different from the user that logged into the machine (remote user), we call it `become`. The `become` keyword uses existing privilege escalation tools like sudo, su, pfexec, doas, pbrun, dzdo, ksu, runas, machinectl and others.
+Ansible uses existing privilege escalation systems to execute tasks with root privileges or with another user’s permissions. Because this feature allows you to "become" another user, different from the user that logged into the machine (remote user), we call it `become`. The `become` keyword uses existing privilege escalation tools like `sudo`, `su`, `pfexec`, `doas`, `pbrun`, `dzdo`, `ksu`, `runas`, `machinectl` and others.
 
-##### ansible.builtin.apt module
+**ansible.builtin.apt module**
 
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
 
