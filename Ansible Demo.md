@@ -4,13 +4,16 @@
 
    * [Ansible Demo](#ansible-demo)
       * [Introduction](#introduction)
-      * [Ansible installation guide](#ansible-installation-guide)
-         * [Installing Ansible](#installing-ansible)
-         * [Upgrading Ansible](#upgrading-ansible)
-      * [Building Ansible inventories](#building-ansible-inventories)
+      * [Ansible Installation Guide](#ansible-installation-guide)
+         * [Installing Ansible on RHEL/AlmaLinux/Rocky Linux](#installing-ansible-on-rhelalmalinuxrocky-linux)
+         * [Upgrading Ansible on RHEL/AlmaLinux/Rocky Linux](#upgrading-ansible-on-rhelalmalinuxrocky-linux)
+         * [Installing Ansible on Debian/Ubuntu](#installing-ansible-on-debianubuntu)
+         * [Show Ansible's Version](#show-ansibles-version)
+      * [Verify ssh Connectivity of Ansible Managed Nodes](#verify-ssh-connectivity-of-ansible-managed-nodes)
+      * [Building Ansible Inventories](#building-ansible-inventories)
          * [Adding ranges of hosts](#adding-ranges-of-hosts)
       * [YAML](#yaml)
-      * [Using Ansible playbooks](#using-ansible-playbooks)
+      * [Using Ansible Playbooks](#using-ansible-playbooks)
          * [Running playbooks in check mode](#running-playbooks-in-check-mode)
       * [Using Ansible modules and plugins](#using-ansible-modules-and-plugins)
          * [command – Execute commands on targets](#command--execute-commands-on-targets)
@@ -28,9 +31,7 @@
             * [ansible.builtin.apt module](#ansiblebuiltinapt-module)
 
 
-
 ---
-
 
 
 ### Introduction
@@ -41,7 +42,7 @@ This demo setup includes one AlmaLinux 9.4 serving as the Ansible control node a
 > This demonstration assumes you are familiar with SSH key-based authentication.
 > [Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup%20SSH%20Key-Based%20Authentication.md)
 
-### Ansible installation guide
+### Ansible Installation Guide
 
 https://docs.ansible.com/ansible/latest/installation_guide/index.html
 
@@ -78,7 +79,7 @@ pip -V
 pip 21.2.3 from /usr/lib/python3.9/site-packages/pip (python 3.9)
 ```
 
-#### Installing Ansible
+#### Installing Ansible on RHEL/AlmaLinux/Rocky Linux
 
 Use `pip` in your selected Python environment (https://docs.python.org/3/library/venv.html, https://github.com/pyenv/pyenv, https://conda.io/projects/conda/en/latest/index.html, https://github.com/mamba-org/mamba) to install the full Ansible package for the current user:
 
@@ -87,14 +88,16 @@ Use `pip` in your selected Python environment (https://docs.python.org/3/library
 python3 -m pip install --user ansible
 ```
 
-#### Upgrading Ansible
+#### Upgrading Ansible on RHEL/AlmaLinux/Rocky Linux
 
 To upgrade an existing Ansible installation in this Python environment to the latest released version, simply add `--upgrade` to the command above:
 
 ```shell
-# Install Ansible on RHEL/AlmaLinux/Rocky Linux
+# Upgrade Ansible on RHEL/AlmaLinux/Rocky Linux
 python3 -m pip install --upgrade --user ansible
 ```
+#### Installing Ansible on Debian/Ubuntu
+
 ```shell
 # Install Ansible on Debian/Ubuntu
 # Create a work directory and enter it
@@ -118,6 +121,7 @@ python -m pip install --upgrade pip
 # Install Ansible
 python -m pip install ansible
 ```
+#### Show Ansible's Version
 ```shell
 # Show Ansible's version number, config file location, configured module search path,
 # module location, executable location and exit
@@ -140,6 +144,10 @@ ansible [core 2.17.1]
 
 ---
 
+
+
+### Verify `ssh` Connectivity of Ansible Managed Nodes
+
 Add `ansible-node1`, `ansible-node2` to `/etc/hosts`
 
 ```
@@ -156,7 +164,7 @@ IP_ADDRESS_OF_NODE2 ansible-node2
 
 
 
-### Building Ansible inventories
+### Building Ansible Inventories
 
 https://docs.ansible.com/ansible/latest/inventory_guide/index.html
 
@@ -265,7 +273,7 @@ YAML Syntax https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyn
 
 
 
-### Using Ansible playbooks
+### Using Ansible Playbooks
 
 https://docs.ansible.com/ansible/latest/playbook_guide/index.html
 
