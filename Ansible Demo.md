@@ -1,10 +1,47 @@
 ## Ansible Demo
 
-##### Introduction
+### Table of Contents
 
-This demo presumes familiarity with SSH key-based authentication. The lab setup includes one AlmaLinux 9.4 serving as the Ansible control node and two Ubuntu 24.04 LTS instances as the managed nodes.
+   * [Ansible Demo](#ansible-demo)
+      * [Introduction](#introduction)
+      * [Ansible installation guide](#ansible-installation-guide)
+         * [Installing Ansible](#installing-ansible)
+         * [Upgrading Ansible](#upgrading-ansible)
+      * [Building Ansible inventories](#building-ansible-inventories)
+         * [Adding ranges of hosts](#adding-ranges-of-hosts)
+      * [YAML](#yaml)
+      * [Using Ansible playbooks](#using-ansible-playbooks)
+         * [Running playbooks in check mode](#running-playbooks-in-check-mode)
+      * [Using Ansible modules and plugins](#using-ansible-modules-and-plugins)
+         * [command – Execute commands on targets](#command--execute-commands-on-targets)
+         * [debug – Print statements during execution](#debug--print-statements-during-execution)
+      * [Using Variables](#using-variables)
+         * [Defining variables in included files and roles](#defining-variables-in-included-files-and-roles)
+      * [Loops](#loops)
+         * [Iterating over a simple list](#iterating-over-a-simple-list)
+         * [Registering variables with a loop](#registering-variables-with-a-loop)
+      * [Organizing host and group variables](#organizing-host-and-group-variables)
+      * [ansible.cfg](#ansiblecfg)
+         * [The configuration file](#the-configuration-file)
+      * [ansible.builtin.copy module – Copy files to remote locations](#ansiblebuiltincopy-module--copy-files-to-remote-locations)
+      * [Understanding privilege escalation: become](#understanding-privilege-escalation-become)
+            * [ansible.builtin.apt module](#ansiblebuiltinapt-module)
 
-##### Ansible installation guide
+
+
+---
+
+
+
+### Introduction
+
+This demo setup includes one AlmaLinux 9.4 serving as the Ansible control node and two Ubuntu 24.04 LTS instances as the managed nodes.
+
+> [!IMPORTANT]  
+> This demonstration assumes you are familiar with SSH key-based authentication.
+> [Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup%20SSH%20Key-Based%20Authentication.md)
+
+### Ansible installation guide
 
 https://docs.ansible.com/ansible/latest/installation_guide/index.html
 
@@ -41,17 +78,16 @@ pip -V
 pip 21.2.3 from /usr/lib/python3.9/site-packages/pip (python 3.9)
 ```
 
-
-
-##### Installing Ansible
+#### Installing Ansible
 
 Use `pip` in your selected Python environment (https://docs.python.org/3/library/venv.html, https://github.com/pyenv/pyenv, https://conda.io/projects/conda/en/latest/index.html, https://github.com/mamba-org/mamba) to install the full Ansible package for the current user:
 
 ```shell
+# Install Ansible on RHEL/AlmaLinux/Rocky Linux
 python3 -m pip install --user ansible
 ```
 
-##### Upgrading Ansible
+#### Upgrading Ansible
 
 To upgrade an existing Ansible installation in this Python environment to the latest released version, simply add `--upgrade` to the command above:
 
@@ -120,7 +156,7 @@ IP_ADDRESS_OF_NODE2 ansible-node2
 
 
 
-##### Building Ansible inventories
+### Building Ansible inventories
 
 https://docs.ansible.com/ansible/latest/inventory_guide/index.html
 
@@ -200,7 +236,7 @@ ansible-node1 | SUCCESS => {
 }
 ```
 
-##### Adding ranges of hosts
+#### Adding ranges of hosts
 
 If you have a lot of hosts with a similar pattern, you can add them as a range rather than listing each hostname separately:
 
@@ -215,15 +251,21 @@ ansible-node[1:2] ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private
 
 ---
 
+
+
+### YAML
+
 YAML guide https://circleci.com/blog/what-is-yaml-a-beginner-s-guide/
 
 YAML Syntax https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
+
+
 
 ---
 
 
 
-##### Using Ansible playbooks
+### Using Ansible playbooks
 
 https://docs.ansible.com/ansible/latest/playbook_guide/index.html
 
@@ -298,7 +340,7 @@ ansible-node1              : ok=2    changed=0    unreachable=0    failed=0    s
 ansible-node2              : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-##### Running playbooks in check mode
+#### Running playbooks in check mode
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_checkmode.html
 
@@ -314,7 +356,7 @@ ansible-playbook --check playbook1.yaml -i inventory.ini
 
 
 
-##### Using Ansible modules and plugins
+### Using Ansible modules and plugins
 
 https://docs.ansible.com/ansible/latest/module_plugin_guide/index.html
 
@@ -324,7 +366,7 @@ https://docs.ansible.com/ansible/latest/collections/index_module.html
 
 You can execute modules from the command line.
 
-**command – Execute commands on targets**
+#### command – Execute commands on targets
 
 `ansible.builtin.command` module: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
 
@@ -429,7 +471,7 @@ ADDED IN: historical
 
 
 
-##### debug – Print statements during execution
+#### debug – Print statements during execution
 
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
 
@@ -476,7 +518,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 
 
 
-##### Using Variables
+### Using Variables
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html
 
@@ -520,7 +562,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 
 
 
-##### Defining variables in included files and roles
+#### Defining variables in included files and roles
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#defining-variables-in-included-files-and-roles
 
@@ -583,7 +625,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 
 
 
-##### Loops
+### Loops
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html
 
@@ -658,7 +700,7 @@ localhost                  : ok=1    changed=0    unreachable=0    failed=0    s
 
 
 
-##### Iterating over a simple list
+#### Iterating over a simple list
 
 You can define the list in a variables file, or in the `vars` section of your play, then refer to the name of the list in the task.
 
@@ -718,7 +760,7 @@ localhost                  : ok=1    changed=0    unreachable=0    failed=0    s
 
 
 
-##### Registering variables with a loop
+#### Registering variables with a loop
 
 You can register the output of a loop as a variable.
 
@@ -807,7 +849,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 
 
 
-##### Organizing host and group variables
+### Organizing host and group variables
 
 https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#organizing-host-and-group-variables
 
@@ -973,7 +1015,7 @@ ansible-node2              : ok=1    changed=0    unreachable=0    failed=0    s
 
 
 
-##### ansible.cfg
+### ansible.cfg
 
 https://docs.ansible.com/ansible/latest/reference_appendices/config.html
 
@@ -981,7 +1023,7 @@ Ansible supports several sources for configuring its behavior, including an ini 
 
 The `ansible-config` utility allows users to see all the configuration settings available, their defaults, how to set them and where their current value comes from. See [ansible-config](https://docs.ansible.com/ansible/latest/cli/ansible-config.html#ansible-config) for more information.
 
-##### The configuration file
+#### The configuration file
 
 Changes can be made and used in a configuration file which will be searched for in the following order:
 
@@ -1017,7 +1059,7 @@ ansible-playbook playbook9.yaml
 
 
 
-##### ansible.builtin.copy module – Copy files to remote locations
+### ansible.builtin.copy module – Copy files to remote locations
 
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
 
@@ -1080,7 +1122,7 @@ demo
 
 
 
-##### Understanding privilege escalation: become
+### Understanding privilege escalation: become
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
 
