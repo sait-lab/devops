@@ -78,9 +78,11 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    ![ssh-key-log-in](./Setup%20SSH%20Key-Based%20Authentication.assets/ssh-key-log-in.jpeg) 
 
 5. OpenSSH allows you to set up a per-user configuration file where you can store different SSH options for each remote machine you connect to. Edit the SSH config file on your OpenSSH **client**.
-   [SSH config file syntax and how-tos for configuring the OpenSSH client](https://www.ssh.com/academy/ssh/config)
+   
    If you don't have `"%USERPROFILE%\.ssh\config"` file on Microsoft Windows or `~/.ssh/config` file on Linux or macOS, create one. If the SSH config already exists, append the config for the SSH target to it.
 
+   [SSH config file syntax and how-tos for configuring the OpenSSH client](https://www.ssh.com/academy/ssh/config)
+   
    ```
    # Append the following section to your SSH config file on SSH client
    Host NICKNAME_FOR_YOUR_SSH_TARGET
@@ -92,7 +94,7 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    ```
 
    ![ssh-config-file](./Setup%20SSH%20Key-Based%20Authentication.assets/ssh-config-file.png)  
-
+   
 6. `ssh` into the SSH target using key-based authentication defined in SSH config file.
 
    ```shell
