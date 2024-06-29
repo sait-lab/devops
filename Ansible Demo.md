@@ -59,7 +59,8 @@ To upgrade an existing Ansible installation in this Python environment to the la
 # Install Ansible on RHEL/AlmaLinux/Rocky Linux
 python3 -m pip install --upgrade --user ansible
 ```
-```
+```shell
+# Install Ansible on Debian/Ubuntu
 # Create a work directory and enter it
 mkdir ~/ansible && cd ~/ansible
 
