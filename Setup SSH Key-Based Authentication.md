@@ -40,6 +40,9 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
 
    [Using Ed25519 for OpenSSH keys (instead of DSA/RSA/ECDSA) (linux-audit.com)](https://linux-audit.com/using-ed25519-openssh-keys-instead-of-dsa-rsa-ecdsa/)
 
+   The screenshot below shows using `ssh-keygen` to generate a key pair (`devops_vm_id.pub` and `devops_vm_id`).
+   ![ssh-keygen-demo](./Setup%20SSH%20Key-Based%20Authentication.assets/ssh-keygen-demo.jpeg) 
+
 3. Copy the content of public key generated (the file with `.pub` filename extention) to the `~/.ssh/authorized_keys` file on the SSH target. If the `~/.ssh/` directory does not exist on the SSH target, create it.
 
    Display the public key on the client:
@@ -102,7 +105,7 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    ssh NAME_OF_HOST_SECTION
    ```
 
-   **Note**: Use name of Host section (`devops-vm` in the screenshot below) instead of HostName (`192.168.47.143` in the screenshot below) of Host section.
+   **Note**: Use name of `Host` section (`devops-vm` in the screenshot below) instead of `HostName` (`192.168.47.143` in the screenshot below) of Host section.
 
    If you can connect to the SSH target **without typing password**, congratulations!
 
