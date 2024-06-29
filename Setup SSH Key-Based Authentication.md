@@ -88,7 +88,7 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
 
 5. OpenSSH allows you to set up a per-user configuration file where you can store different SSH options for each remote machine you connect to. Edit the SSH config file on your OpenSSH **client**.
    
-   If you don't have `"%USERPROFILE%\.ssh\config"` file on Microsoft Windows or `~/.ssh/config` file on Linux or macOS, create one. If the SSH config already exists, append the config for the SSH target to it.
+   If you don't have `"%USERPROFILE%\.ssh\config"` file on Microsoft Windows or `~/.ssh/config` file on Linux or macOS, create one. **If the SSH config already exists, append** the Host section for the SSH target to the config file.
 
    [SSH config file syntax and how-tos for configuring the OpenSSH client](https://www.ssh.com/academy/ssh/config)
    
@@ -96,16 +96,18 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    # Append the following section to your SSH config file on SSH client.
    # You can "/" on Windows as path delimiter.
    Host NAME_FOR_SSH_TARGET
-     HostName                FQDN_OR_IP_OF_YOUR_SSH_TARGET
+     HostName                FQDN_OR_IP_OF_SSH_TARGET
      User                    USERNAME_OF_SSH_TARGET
-     IdentityFile            ~/.ssh/YOUR_PRIVATE_KEY_FILENAME
+     IdentityFile            ~/.ssh/PRIVATE_KEY_FILENAME
      ServerAliveInterval     5
      ExitOnForwardFailure    yes
    ```
    
+   The screenshot below shows a `Host` section with name `devops-vm`.
+   
    ![ssh-config-file](./Setup%20SSH%20Key-Based%20Authentication.assets/ssh-config-file.png)  
    
-6. `ssh` into the SSH target using SSH options defined in SSH config file.
+6. `ssh` into the SSH target using SSH configuration defined in SSH config file.
 
    ```shell
    ssh NAME_OF_HOST_SECTION
