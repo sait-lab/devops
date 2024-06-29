@@ -86,10 +86,10 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    ```
    # Append the following section to your SSH config file on SSH client.
    # You can "/" on Windows as path delimiter.
-   Host NICKNAME_FOR_YOUR_SSH_TARGET
+   Host NAME_FOR_SSH_TARGET
      HostName                FQDN_OR_IP_OF_YOUR_SSH_TARGET
-     User                    YOUR_SSH_TARGET_USERNAME
-     IdentityFile            ~/.ssh/YOUR_KEY_NAME
+     User                    USERNAME_OF_SSH_TARGET
+     IdentityFile            ~/.ssh/YOUR_PRIVATE_KEY_FILENAME
      ServerAliveInterval     5
      ExitOnForwardFailure    yes
    ```
