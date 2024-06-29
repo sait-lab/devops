@@ -1,5 +1,13 @@
 ## Setup SSH Key-Based Authentication
 
+### What and Why
+
+[What is SSH Public Key Authentication?](https://www.ssh.com/academy/ssh/public-key-authentication)
+
+>The motivation for using public key authentication over simple passwords is security. Public key authentication provides cryptographic strength that even extremely long passwords can not offer. With [SSH](https://www.ssh.com/ssh/), public key authentication improves security considerably as it frees the users from remembering complicated passwords (or worse yet, writing them down).
+>
+>In addition to security public key authentication also offers usability benefits - it allows users to implement single sign-on across the [SSH servers](https://www.ssh.com/ssh/server) they connect to. Public key authentication also allows automated, passwordless login that is a key enabler for the countless secure automation processes that execute within enterprise networks globally.
+
 ### Terms
 
 - **OpenSSH**: OpenSSH is a connectivity tool for remote sign-in that uses the SSH protocol. It encrypts all traffic between client and server to eliminate eavesdropping, connection hijacking, and other attacks.
