@@ -63,7 +63,7 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    cat ~/.ssh/YOUR_KEY_NAME.pub
    ```
 
-   The following demo shows copying the content of public key `devos_vm_id` to the `~/.ssh/authorized_keys` file on the SSH target at `192.168.47.143`. The username of the SSH target is `student`.
+   The following demo shows copying the content of public key `devops_vm_id` to the `~/.ssh/authorized_keys` file on the SSH target at `192.168.47.143`. The username of the SSH target is `student`.
    ```cmd
    ssh student@192.168.47.143 mkdir -p ~/.ssh
    ssh student@192.168.47.143 "echo 'CONTENT_YOUR_PUB_KEY' >> ~/.ssh/authorized_keys"
