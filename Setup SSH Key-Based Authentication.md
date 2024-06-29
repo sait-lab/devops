@@ -17,11 +17,9 @@
 - **`ssh` command/client**: OpenSSH remote login client.
 - **`.ssh` folder**: `%USERPROFILE%\.ssh\` on Windows, `~/.ssh/` on Linux and macOS.
 
+### Steps
 
 https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc3072481
-
-
-### Steps
 
 1. Verify that you can use username and password to connect to the SSH target.
    ```shell
