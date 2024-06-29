@@ -84,7 +84,8 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    [SSH config file syntax and how-tos for configuring the OpenSSH client](https://www.ssh.com/academy/ssh/config)
    
    ```
-   # Append the following section to your SSH config file on SSH client
+   # Append the following section to your SSH config file on SSH client.
+   # You can "/" on Windows as path delimiter.
    Host NICKNAME_FOR_YOUR_SSH_TARGET
      HostName                FQDN_OR_IP_OF_YOUR_SSH_TARGET
      User                    YOUR_SSH_TARGET_USERNAME
@@ -92,17 +93,19 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
      ServerAliveInterval     5
      ExitOnForwardFailure    yes
    ```
-
+   
    ![ssh-config-file](./Setup%20SSH%20Key-Based%20Authentication.assets/ssh-config-file.png)  
    
-6. `ssh` into the SSH target using key-based authentication defined in SSH config file.
+6. `ssh` into the SSH target using SSH options defined in SSH config file.
 
    ```shell
    ssh NAME_OF_HOST_SECTION
    ```
 
+   **Note**: Use name of Host section (`devops-vm` in the screenshot below) instead of HostName (`192.168.47.143` in the screenshot below) of Host section.
+
    If you can connect to the SSH target **without typing password**, congratulations!
 
    ![ssh-use-config-file](./Setup%20SSH%20Key-Based%20Authentication.assets/ssh-use-config-file.jpeg) 
-
+   
    
