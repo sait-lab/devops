@@ -98,6 +98,8 @@ python3 -m pip install --upgrade --user ansible
 ```
 #### Installing Ansible on Debian/Ubuntu
 
+https://github.com/sait-lab/devops/assets/81775267/0d238445-fc63-4d97-a213-22a6376a8ed9
+
 ```shell
 # Install Ansible on Debian/Ubuntu
 # Create a work directory and enter it
