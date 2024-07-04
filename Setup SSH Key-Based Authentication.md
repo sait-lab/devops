@@ -35,6 +35,11 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    mkdir "%USERPROFILE%/.ssh"
    cd "%USERPROFILE%/.ssh"
    ssh-keygen -t ed25519 -f "%USERPROFILE%/.ssh/YOUR_KEY_NAME" -C "John Doe"
+   
+   : If your Windows does not take forward slash, try backward slash
+   mkdir "%USERPROFILE%\.ssh"
+   cd "%USERPROFILE%\.ssh"
+   ssh-keygen -t ed25519 -f "%USERPROFILE%\.ssh\YOUR_KEY_NAME" -C "John Doe"
    ```
 
    ```shell
@@ -77,6 +82,13 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    ```cmd
    : On Microsoft Windows
    ssh -i "%USERPROFILE%/.ssh/YOUR_KEY_NAME" USERNAME@FQDN_OR_IP_ADDR_OF_SSH_TARGET
+   
+   : If your Windows does not take forward slash, try backward slash
+   ssh -i "%USERPROFILE%\.ssh\YOUR_KEY_NAME" USERNAME@FQDN_OR_IP_ADDR_OF_SSH_TARGET
+   
+   : If your Windows still complains about file not found
+   cd "%USERPROFILE%\.ssh\"
+   ssh -i YOUR_KEY_NAME USERNAME@FQDN_OR_IP_ADDR_OF_SSH_TARGET
    ```
 
    ```shell
