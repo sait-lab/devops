@@ -54,7 +54,7 @@ Click on green "New SSH key" button to add your public key (the content of .pub 
 
    ```
    eval "$(ssh-agent -s)"
-   ssh-add /home/student/.ssh/YOUR_PRIVE_KEY_FILE
+   ssh-add /home/YOUR_USERNAME/.ssh/YOUR_PRIVE_KEY_FILE
    ```
 
    <img src="./GitHub%20Key-Based%20SSH%20Authentication.assets/ssh-id-added.jpg" alt="ssh-id-added" style="zoom:50%;" /> 
@@ -93,7 +93,7 @@ Click on green "New SSH key" button to add your public key (the content of .pub 
 
    ```
    echo 'eval "$(ssh-agent -s)"' >> ~/.bashrc
-   echo 'ssh-add /home/student/.ssh/YOUR_PRIVE_KEY_FILE' >> ~/.bashrc
+   echo 'ssh-add /home/YOUR_USERNAME/.ssh/YOUR_PRIVE_KEY_FILE' >> ~/.bashrc
    ```
 
    <img src="./GitHub%20Key-Based%20SSH%20Authentication.assets/add-ssh-agent-rc.jpg" alt="add-ssh-agent-rc" style="zoom:50%;" /> 
