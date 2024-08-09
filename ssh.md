@@ -239,6 +239,10 @@ SSH public key authentication is a secure method of logging into an SSH server w
 - Monitor and log all activity.
 - Use SSH agent forwarding.
 
+![bastion](./ssh.assets/bastion.png) 
+
+Credit: [How to Record SSH Sessions Established Through a Bastion Host | AWS Security Blog (amazon.com)](https://aws.amazon.com/blogs/security/how-to-record-ssh-sessions-established-through-a-bastion-host/)
+
 Credit: [SSH Security Best Practices: Protecting Your Remote Access Infrastructure · Tailscale](https://tailscale.com/learn/ssh-security-best-practices-protecting-your-remote-access-infrastructure)
 
 
