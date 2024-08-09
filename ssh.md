@@ -103,8 +103,8 @@ Credit: https://developer.ibm.com/articles/au-sshsecurity/
 
 ### SSH Components
 
-- OpenSSH is a freely available version of the Secure Shell (SSH) protocol family of tools. `ssh` command of OpenSSH is a connectivity tool for remote sign-in that uses the SSH protocol.
-- The OpenSSH server component, `sshd`, listens continuously for client connections from any of the client tools.
+- OpenSSH is a freely available version of the Secure Shell (SSH) protocol family of tools. `ssh` is a command you use to securely connect to other computers using the SSH protocol.
+- The OpenSSH server component, `sshd`, runs on a computer, waiting for other computers to connect to it securely.
 
 ### Authentication Methods
 
@@ -114,7 +114,7 @@ Credit: https://developer.ibm.com/articles/au-sshsecurity/
 
 > [!NOTE]
 >
-> Use `ssh -V` command to check the the OpenSSH version. It displays the version of OpenSSH as well as the implementation of the Transport Layer Security (TLS) stack, such as LibreSSL or OpenSSL.
+> Use `ssh -V` command to check the OpenSSH version. It displays the version of OpenSSH as well as the implementation of the Transport Layer Security (TLS) stack, such as LibreSSL or OpenSSL.
 >
 > Example outputs of `ssh -V` command:
 >
