@@ -10,9 +10,11 @@
 - Shells provide features like 
 
 <details>
-  - Shells provide features like command execution, scripting, file manipulation, and process management.
-  - Windows provides the `cmd` shell and the `Power Shell`; `bash` is becoming available as well.
-  - Common shells on Linux and MacOS are `bash` and `zsh`.
+  <ul>
+    <li>Shells provide features like command execution, scripting, file manipulation, and process management.</li>
+    <li>Windows provides the `cmd` shell and the `Power Shell`; `bash` is becoming available as well.</li>
+    <li>Common shells on Linux and MacOS are `bash` and `zsh`.</li>
+  </ul>
 
 </details>
 
