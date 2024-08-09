@@ -115,8 +115,13 @@ Excerpt from https://www.digitalocean.com/community/tutorials/ssh-essentials-wor
 ### Three different encryption technologies used by SSH
 
 - Symmetric Encryption algorithms are used for encrypting the SSH session, the communication between the client and server.
+   ![symmetric-enc](./ssh.assets/symmetric-enc.jpg) 
 - Asymmetric Encryption algorithms are used for key exchange and authentication.
+   ![asymmetric-enc](./ssh.assets/asymmetric-enc.jpg)  
 - Hashing functions are used to ensure data integrity.
+   ![hashing](./ssh.assets/hashing.jpg) 
+
+Credit: https://www.wallarm.com/what/what-is-ssh-protocol
 
 <details>
   <summary>More details aboutn SSH Encryption</summary>
