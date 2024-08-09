@@ -274,3 +274,7 @@ Credit: [SSH Security Best Practices: Protecting Your Remote Access Infrastructu
 
 
 ## Q&A
+
+Discussions of this repository is like a friendly neighborhood café where you can chat about SSH, share your experiences, and get help from fellow learners. Issues are more for reporting problems with the course material itself, like if you spot a typo or if a link is broken. Think of Discussions as the place for conversation, and Issues as the suggestion box. Happy learning!
+
+![issues.n.discussions](./ssh.assets/issues.n.discussions.png) 
