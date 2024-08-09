@@ -46,7 +46,7 @@ A shell is a command-line interface that allows users to interact with an operat
 
 ### What is Telent
 
-**Telnet** (short for "teletype network")  is a network protocol that allows a user to remotely access and control another computer over the Internet or local area network (LAN). It enables a user to establish a connection to a remote system and perform tasks as if they were sitting in front of that computer.
+**Telnet** (short for "teletype network")  is a network protocol that allows a user to remotely access and control another computer over the Internet or local area network (LAN). It enables a user to establish a connection to a remote system and perform tasks as if they were sitting in front of that remote server.
 
  ![telnet_diag](./ssh.assets/telnet_diag.gif)   
 
