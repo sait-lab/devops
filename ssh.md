@@ -10,6 +10,7 @@ A shell is a command-line interface that allows users to interact with an operat
 
 <details>
   <summary>Shells on Windows, Linux and macOS</summary>
+  <br>
   <ul>
     <li>Shells provide features like command execution, scripting, file manipulation, and process management.</li>
     <li>Windows provides the <b>cmd</b> shell and the <b>Power Shell</b>; <b>bash</b> is becoming available as well.</li>
@@ -31,6 +32,7 @@ Credit: www.cloudns.net
 
 <details>
   <summary>More details about Telent</summary>
+  <br>
   <ul>
     <li>It uses the Transmission Control Protocol (TCP) as its underlying transport protocol.</li>
     <li>It is platform-independent, which means that it can be used to connect to a variety of different operating systems and computers.</li>
@@ -48,6 +50,7 @@ Excerpt from https://www.digitalocean.com/community/tutorials/ssh-essentials-wor
 
 <details>
   <summary>Key differences from Telnet</summary>
+  <br>
   <ul>
     <li>Encryption: SSH encrypts all data, including login credentials, while Telnet transmits data in plain text.</li>
     <li>Authentication: SSH uses public-key cryptography for stronger authentication.</li>
@@ -72,4 +75,83 @@ Excerpt from https://www.digitalocean.com/community/tutorials/ssh-essentials-wor
 
 
 ## How SSH Works
+
+### SSH Components
+
+- OpenSSH is a freely available version of the Secure Shell (SSH) protocol family of tools. `ssh` command of OpenSSH is a connectivity tool for remote sign-in that uses the SSH protocol.
+- The OpenSSH server component, `sshd`, listens continuously for client connections from any of the client tools.
+
+### Authentication Methods
+
+- **Password Authentication:** Simplest but less secure.
+- **Public Key Authentication:** Stronger security, using a pair of keys (private and public).
+- **Kerberos Tickets**: Single Sign-On capabilities, centralized authentication, mutual authentication, Time-Limited Credentials.
+
+> [!NOTE]
+>
+> Use `ssh -V` command to check the the OpenSSH version. It displays the version of OpenSSH as well as the implementation of the Transport Layer Security (TLS) stack, such as LibreSSL or OpenSSL.
+>
+> Example outputs of `ssh -V` command:
+>
+> ```
+> # On macOS Sonoma 14.6.1
+> OpenSSH_9.7p1, LibreSSL 3.3.6
+> 
+> # On Ubuntu Linux 24.04 LTS
+> OpenSSH_9.6p1 Ubuntu-3ubuntu13.4, OpenSSL 3.0.13 30 Jan 2024
+> 
+> # On Windows Server 2022
+> OpenSSH_for_Windows_8.1p1, LibreSSL 3.0.2
+> ```
+
+
+
+## Key Components of SSH Encryption
+
+> [!NOTE]
+>
+> If you're not familiar with those cryptography terms, don't worry. They are covered in your cybersecurity fundamentals course.
+
+### Three different encryption technologies used by SSH
+
+- Symmetric Encryption algorithms are used for encrypting the SSH session, the communication between the client and server.
+- Asymmetric Encryption algorithms are used for key exchange and authentication.
+- Hashing functions are used to ensure data integrity.
+
+<details>
+  <summary>More details aboutn SSH Encryption</summary>
+  <br>
+  <b>Symmetric Encryption</b>
+  <ul>
+    <li>Used for encrypting the session once it's established.</li>
+    <li>Algorithms: chacha20-poly1305, AES (Advanced Encryption Standard), CAST128, Blowfish, etc.</li>
+    <li>Before establishing a secured connection, the client and a host decide upon which cipher to use, by publishing a list of supported ciphers in order of preference.</li>
+  </ul>
+  <b>Asymmetric Encryption</b>
+  <ul>
+    <li>Asymmetrical encryption uses two separate keys for encryption and decryption.</li>
+    <li>These two keys are known as the <b>public key</b> and the <b>private key</b>.</li>
+    <li>Together, both these keys form a <b>public-private key pair</b>.</li>
+    <li><b>Asymmetrical encryption is NOT used to encrypt an entire SSH session</b>. Instead, it is used during the key exchange algorithm of symmetric encryption.</li>
+    <li>Once a secured symmetric communication has been established, the server uses the client’s public key to generate and challenge and transmit it to the client for authentication.</li>
+    <li>If the client can successfully decrypt the message, it means that it holds the private key required for the connection – the SSH session then begins.</li>
+  </ul>
+  <b>Hashing</b>
+  <ul>
+    <li>One-way-hash functions generate a unique value of a fixed length for each input that shows no clear trend which can be exploited.</li>
+    <li>SSH uses hashes to verify the authenticity of messages. This is done using HMACs, or Hash-based Message Authentication Codes.</li>
+    <li>HMAC ensures that the command received is not tampered with in any way.</li>
+  </ul>
+  Credit: https://www.hostinger.com/tutorials/ssh-tutorial-how-does-ssh-work
+</details>
+
+> [!TIP]
+>
+> Use `-v` or `-vv` SSH command line argument to turn on verbose logging. It helps admininstrators track and understand every transaction occurring between the client and the server.
+
+![How does SSH work](./ssh.assets/How%20does%20SSH%20work.gif)  
+
+Credit: https://bytebytego.com/
+
+
 
