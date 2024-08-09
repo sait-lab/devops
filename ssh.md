@@ -155,3 +155,64 @@ Credit: https://bytebytego.com/
 
 
 
+## SSH Public Key Authentication
+
+SSH public key authentication is a secure method of logging into an SSH server without using a password. It uses a pair of cryptographic keys: a public key and a private key.
+
+- Key Pair: A pair of Public and Private keys.
+- Public key: Stored on the remote server. It's safe to share publicly.
+- Private key: Remains only with the user. Never shared.
+- Only a user in possession of a private key that corresponds to the public key at the server will be able to authenticate successfully.
+- The private keys used for user authentication are called identity keys.
+
+> [!NOTE]
+>
+> Read [What is SSH Public Key Authentication?](https://www.ssh.com/academy/ssh/public-key-authentication) for detailed information.
+>
+> The instructions for setting up SSH key-based authentication are available at: [Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup SSH Key-Based Authentication.md)
+
+
+
+## SSH Security Best Practices
+
+### Enforcing Strong Authentication
+
+- Use SSH Public Key Authentication.
+- Enable two-factor authentication.
+- Implement account lockouts.
+- Educate users.
+
+### Managing SSH Keys
+
+- Properly generate SSH key pairs.
+- Safeguard private keys.
+- Rotate SSH keys.
+- Revoke SSH keys.
+- Regularly audit your SSH keys.
+- Implement key management solutions.
+
+### Securing Your SSH Settings
+
+- Disable Password Authentication.
+- Change the default SSH port.
+- Disable root login.
+- Limit user logins.
+
+Credit: [SSH Security Best Practices: Protecting Your Remote Access Infrastructure · Tailscale](https://tailscale.com/learn/ssh-security-best-practices-protecting-your-remote-access-infrastructure)
+
+
+
+## Advanced SSH Features
+
+- **SSH Port Forwarding:** Securely forward network traffic through SSH to access services behind a firewall.
+- **SSH Agent Forwarding**: It allows you to use your local SSH keys instead of leaving keys (without passphrases!) sitting on your server.
+- **SSH ProxyJump**: A **Bastion host** or a **Jump Server** is an intermediary device that an SSH client connects to first before accessing the target remote Linux system. An **SSH Jump** server acts as a gateway to your IT resources, thus reducing the attack surface.
+- **SSH ProxyCommand**: **ProxyCommand** works by forwarding standard in (stdin) and standard out (stdout) from the remote machine through the proxy or bastion hosts.
+
+> [!TIP]
+>
+> Read [SSH Tunneling: Client Command & Server Configuration](https://www.ssh.com/academy/ssh/tunneling-example) for Port Forwarding configuration.
+>
+> Read [Ssh-agent single sign-on configuration, agent forwarding & agent protocol](https://www.ssh.com/academy/ssh/agent) for SSH Agent Forwarding.
+>
+> Read https://www.redhat.com/sysadmin/ssh-proxy-bastion-proxyjump for SSH ProxyJump and ProxyCommand configuration.
