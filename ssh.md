@@ -48,9 +48,9 @@ A shell is a command-line interface that allows users to interact with an operat
 
 **Telnet** (short for "teletype network")  is a network protocol that allows a user to remotely access and control another computer over the Internet or local area network (LAN). It enables a user to establish a connection to a remote system and perform tasks as if they were sitting in front of that computer.
 
- ![telnet](./ssh.assets/telnet.jpg) 
+ ![telnet_diag](./ssh.assets/telnet_diag.gif)   
 
-Credit: www.cloudns.net
+Credit: https://developer.ibm.com/articles/au-sshsecurity/
 
 <details>
   <summary>More details about Telnet</summary>
@@ -62,13 +62,16 @@ Credit: www.cloudns.net
   </ul>
 </details>
 
+
 ### What is SSH
 
 Excerpt from https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
 
 > The most common way of connecting to a remote Linux server is through SSH. SSH stands for Secure Shell and provides a safe and secure way of executing commands, making changes, and configuring services remotely. When you connect through SSH, you log in using an account that exists on the remote server.
 
-![ssh-diagram](./ssh.assets/ssh-diagram.png) 
+![ssh_diag](./ssh.assets/ssh_diag.gif)  
+
+Credit: https://developer.ibm.com/articles/au-sshsecurity/ 
 
 <details>
   <summary>Key differences from Telnet</summary>
@@ -132,7 +135,7 @@ Excerpt from https://www.digitalocean.com/community/tutorials/ssh-essentials-wor
 
 > [!NOTE]
 >
-> If you're not familiar with those cryptography terms, don't worry. They are covered in your cybersecurity fundamentals course.
+> If you're not familiar with those cryptography terms, don't worry. They are covered in your security fundamentals course.
 
 ### Three different encryption technologies used by SSH
 
