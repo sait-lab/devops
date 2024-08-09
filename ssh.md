@@ -202,7 +202,7 @@ SSH public key authentication is a secure method of logging into an SSH server w
 >
 > Read [What is SSH Public Key Authentication?](https://www.ssh.com/academy/ssh/public-key-authentication) for detailed information.
 >
-> The instructions for setting up SSH key-based authentication are available at: [Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup SSH Key-Based Authentication.md)
+> The instructions for setting up SSH key-based authentication are available at: [Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup%20SSH%20Key-Based%20Authentication.md)
 
 
 
