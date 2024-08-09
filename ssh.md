@@ -9,6 +9,7 @@
 A shell is a command-line interface that allows users to interact with an operating system. It interprets user commands and acts as an intermediary between the user and the OS kernel.
 
 <details>
+  <summary>Shells on Windows, Linux and macOS</summary>
   <ul>
     <li>Shells provide features like command execution, scripting, file manipulation, and process management.</li>
     <li>Windows provides the <b>cmd</b> shell and the <b>Power Shell</b>; <b>bash</b> is becoming available as well.</li>
@@ -26,13 +27,31 @@ A shell is a command-line interface that allows users to interact with an operat
 
 ![telnet](./ssh.assets/telnet.webp) 
 
+Credit: www.cloudns.net
+
 <details>
+  <summary>More details about Telent</summary>
   <ul>
     <li>It uses the Transmission Control Protocol (TCP) as its underlying transport protocol.</li>
     <li>It is platform-independent, which means that it can be used to connect to a variety of different operating systems and computers.</li>
     <li>Security concerns: no encryption, no server identity verification, no integrity checks</li>
-    <li>SSH is now preferred for secure remote management due to security concerns.</li>
   </ul>
 </details>
 
 ### What is SSH
+
+Excerpt from https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
+
+> The most common way of connecting to a remote Linux server is through SSH. SSH stands for Secure Shell and provides a safe and secure way of executing commands, making changes, and configuring services remotely. When you connect through SSH, you log in using an account that exists on the remote server.
+
+![ssh-diagram](./ssh.assets/ssh-diagram.png) 
+
+<details>
+  <summary>Key differences from Telnet</summary>
+  <ul>
+    <li>Encryption: SSH encrypts all data, including login credentials, while Telnet transmits data in plain text.</li>
+    <li>Authentication: SSH uses public-key cryptography for stronger authentication.</li>
+    <li>Integrity: SSH ensures data integrity, detecting any tampering during transmission.</li>
+    <li>SSH Host Key is a cryptographic key used for authenticating computers.</li>
+  </ul>
+</details>
