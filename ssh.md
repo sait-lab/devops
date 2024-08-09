@@ -198,6 +198,14 @@ SSH public key authentication is a secure method of logging into an SSH server w
 - Disable root login.
 - Limit user logins.
 
+### SSH Bastion
+
+- Set up a standalone server as the bastion host.
+- Regularly update and patch the bastion host.
+- Control access.
+- Monitor and log all activity.
+- Use SSH agent forwarding.
+
 Credit: [SSH Security Best Practices: Protecting Your Remote Access Infrastructure · Tailscale](https://tailscale.com/learn/ssh-security-best-practices-protecting-your-remote-access-infrastructure)
 
 
@@ -216,3 +224,16 @@ Credit: [SSH Security Best Practices: Protecting Your Remote Access Infrastructu
 > Read [Ssh-agent single sign-on configuration, agent forwarding & agent protocol](https://www.ssh.com/academy/ssh/agent) for SSH Agent Forwarding.
 >
 > Read https://www.redhat.com/sysadmin/ssh-proxy-bastion-proxyjump for SSH ProxyJump and ProxyCommand configuration.
+
+
+
+## Hands-On Demonstration
+
+- Use Wireshark to capture Telent and SSH communication.
+- `ssh -vv` verbose logging demo.
+- Setup SSH Public Key based authentication.
+- SSH features: 2FA, bastion ProxyJump, ProxyCommand.
+
+
+
+## Q&A
