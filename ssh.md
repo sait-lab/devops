@@ -55,3 +55,21 @@ Excerpt from https://www.digitalocean.com/community/tutorials/ssh-essentials-wor
     <li>SSH Host Key is a cryptographic key used for authenticating computers.</li>
   </ul>
 </details>
+
+
+
+## SSH and TCP/IP
+
+- IP operates at OSI Model Layer 3. It indicates which IP address should go to.
+- TCP is a transport layer protocol, which operates at OSI Model Layer 4. TCP indicates which port a packet should go to at each IP address.
+- SSH operates at OSI Model Layer 7. It runs on top of TCP/IP, ensuring reliability and order.
+- Default SSH port number is 22
+
+> [!NOTE]
+>
+> The Network Configuration Protocol (NETCONF) is a network management protocol developed and standardized by the IETF. Default NETCONF Service over SSH port is 830.
+
+
+
+## How SSH Works
+
