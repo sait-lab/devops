@@ -1,5 +1,27 @@
 # Introduction to SSH
 
+### Table of Contents
+
+
+   * [Shell, Telnet and SSH](#shell-telnet-and-ssh)
+      * [What is a Shell](#what-is-a-shell)
+      * [What is Telent](#what-is-telent)
+      * [What is SSH](#what-is-ssh)
+   * [SSH and TCP/IP](#ssh-and-tcpip)
+   * [How SSH Works](#how-ssh-works)
+      * [SSH Components](#ssh-components)
+      * [Authentication Methods](#authentication-methods)
+   * [Key Components of SSH Encryption](#key-components-of-ssh-encryption)
+      * [Three different encryption technologies used by SSH](#three-different-encryption-technologies-used-by-ssh)
+   * [SSH Public Key Authentication](#ssh-public-key-authentication)
+   * [SSH Security Best Practices](#ssh-security-best-practices)
+      * [Enforcing Strong Authentication](#enforcing-strong-authentication)
+      * [Managing SSH Keys](#managing-ssh-keys)
+      * [Securing Your SSH Settings](#securing-your-ssh-settings)
+      * [SSH Bastion](#ssh-bastion)
+   * [Advanced SSH Features](#advanced-ssh-features)
+   * [Hands-On Demonstration](#hands-on-demonstration)
+   * [Q&amp;A](#qa)
 
 
 ## Shell, Telnet and SSH
@@ -14,7 +36,7 @@ A shell is a command-line interface that allows users to interact with an operat
   <ul>
     <li>Shells provide features like command execution, scripting, file manipulation, and process management.</li>
     <li>Windows provides the <b>cmd</b> shell and the <b>Power Shell</b>; <b>bash</b> is becoming available as well.</li>
-    <li>Common shells on Linux and MacOS are <b>bash</b> and <b>zsh</b>.</li>
+    <li>Common shells on Linux and macOS are <b>bash</b> and <b>zsh</b>.</li>
   </ul>
 </details>
 
@@ -26,12 +48,12 @@ A shell is a command-line interface that allows users to interact with an operat
 
 **Telnet** (short for "teletype network")  is a network protocol that allows a user to remotely access and control another computer over the Internet or local area network (LAN). It enables a user to establish a connection to a remote system and perform tasks as if they were sitting in front of that computer.
 
-![telnet](./ssh.assets/telnet.webp) 
+ ![telnet](./ssh.assets/telnet.jpg) 
 
 Credit: www.cloudns.net
 
 <details>
-  <summary>More details about Telent</summary>
+  <summary>More details about Telnet</summary>
   <br>
   <ul>
     <li>It uses the Transmission Control Protocol (TCP) as its underlying transport protocol.</li>
