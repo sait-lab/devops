@@ -5,7 +5,7 @@
 
    * [Shell, Telnet and SSH](#shell-telnet-and-ssh)
       * [What is a Shell](#what-is-a-shell)
-      * [What is Telent](#what-is-telent)
+      * [What is Telnet](#what-is-telnet)
       * [What is SSH](#what-is-ssh)
    * [SSH and TCP/IP](#ssh-and-tcpip)
    * [How SSH Works](#how-ssh-works)
@@ -44,7 +44,7 @@ A shell is a command-line interface that allows users to interact with an operat
 >
 > Use `echo $SHELL` command on Linux and macOS to find out the shell you are using.
 
-### What is Telent
+### What is Telnet
 
 **Telnet** (short for "teletype network")  is a network protocol that allows a user to remotely access and control another computer over the Internet or local area network (LAN). It enables a user to establish a connection to a remote system and perform tasks as if they were sitting in front of that remote server.
 
@@ -140,13 +140,13 @@ Credit: https://developer.ibm.com/articles/au-sshsecurity/
 ### Three different encryption technologies used by SSH
 
 - Symmetric Encryption algorithms are used for encrypting the SSH session, the communication between the client and server.
-   
+  
    ![symmetric-enc](./ssh.assets/symmetric-enc.jpg)  
 - Asymmetric Encryption algorithms are used for key exchange and authentication.
-   
+  
    ![asymmetric-enc](./ssh.assets/asymmetric-enc.jpg)   
 - Hashing functions are used to ensure data integrity.
-   
+  
    ![hashing](./ssh.assets/hashing.jpg)  
 
 Credit: https://www.wallarm.com/what/what-is-ssh-protocol
@@ -266,7 +266,7 @@ Credit: [SSH Security Best Practices: Protecting Your Remote Access Infrastructu
 
 ## Hands-On Demonstration
 
-- Use Wireshark to capture Telent and SSH communication.
+- Use Wireshark to capture Telnet and SSH communication.
 - `ssh -vv` verbose logging demo.
 - Setup SSH Public Key based authentication.
 - SSH features: 2FA, bastion ProxyJump, ProxyCommand.
