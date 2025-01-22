@@ -46,7 +46,7 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    # On Linux or macOS
    mkdir -p ~/.ssh
    cd ~/.ssh
-   ssh-keygen -t ed25519 -f ~/.ssh/YOUR_KEY_NAME" -C "John Doe"
+   ssh-keygen -t ed25519 -f "~/.ssh/YOUR_KEY_NAME" -C "John Doe"
    ```
 
    [Using Ed25519 for OpenSSH keys (instead of DSA/RSA/ECDSA) (linux-audit.com)](https://linux-audit.com/using-ed25519-openssh-keys-instead-of-dsa-rsa-ecdsa/)
