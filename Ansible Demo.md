@@ -45,84 +45,50 @@ This demo setup includes one AlmaLinux 9.4 serving as the Ansible control node a
 
 https://docs.ansible.com/ansible/latest/installation_guide/index.html
 
-https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip
-
 ```shell
 # Verify Python version
 python3 -V
+
+# Python 3.9.xx on RHEL/AlmaLinux/Rocky Linux 9.5
+# Python 3.12.x on Ubuntu 24.04.2 LTS
 ```
 
-```
-Python 3.9.18
-```
+Installing `pipx`. https://pipx.pypa.io/stable/
 
 ```shell
-# Install Python package installer on RHEL/AlmaLinux/Rocky Linux
-sudo dnf install python3-pip
+# Install pipx on RHEL/AlmaLinux/Rocky Linux
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
 ```
 ```shell
 # Install Python package installer on Ubuntu/Debian
-sudo apt-get install -y python3-pip
+sudo apt update
+sudo apt install pipx -y
+pipx ensurepath
 ```
+
+#### Installing Ansible
+
+https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pipx
 
 ```shell
-# Verify pip version
-python3 -m pip -V
-
-# Or
-
-pip -V
+# Use pipx in your environment to install the full Ansible package:
+pipx install --include-deps ansible
 ```
 
-```
-pip 21.2.3 from /usr/lib/python3.9/site-packages/pip (python 3.9)
-```
-
-#### Installing Ansible on RHEL/AlmaLinux/Rocky Linux
-
-Use `pip` in your selected Python environment (https://docs.python.org/3/library/venv.html, https://github.com/pyenv/pyenv, https://conda.io/projects/conda/en/latest/index.html, https://github.com/mamba-org/mamba) to install the full Ansible package for the current user:
+#### Upgrading Ansible
 
 ```shell
-# Install Ansible on RHEL/AlmaLinux/Rocky Linux
-python3 -m pip install --user ansible
+# To upgrade an existing Ansible installation to the latest released version:
+pipx upgrade --include-injected ansible
 ```
 
-#### Upgrading Ansible on RHEL/AlmaLinux/Rocky Linux
-
-To upgrade an existing Ansible installation in this Python environment to the latest released version, simply add `--upgrade` to the command above:
-
-```shell
-# Upgrade Ansible on RHEL/AlmaLinux/Rocky Linux
-python3 -m pip install --upgrade --user ansible
-```
-#### Installing Ansible on Debian/Ubuntu
-
-https://github.com/sait-lab/devops/assets/81775267/0d238445-fc63-4d97-a213-22a6376a8ed9
-
-```shell
-# Install Ansible on Debian/Ubuntu
-# Create a work directory and enter it
-mkdir ~/ansible && cd ~/ansible
-
-# Create a virtual environment
-python3 -m venv venv-ansible
-
-# Activate virtual environment
-. venv-ansible/bin/activate
-# Or
-. ~/ansible/venv-ansible/bin/activate
-# Or
-source venv-ansible/bin/activate
-# Or
-source ~/ansible/venv-ansible/bin/activate
-
-# Upgrade pip
-python -m pip install --upgrade pip
-
-# Install Ansible
-python -m pip install ansible
-```
 #### Show Ansible's Version
+
+> [!NOTE]   
+>
+> Due to the preinstalled Python version (3.9.x) on RHEL/Alma/Rocky Linux, which is no longer supported by Ansible, pipx will install ansible-core 2.15.x instead of the latest version (2.18.x).
+
 ```shell
 # Show Ansible's version number, config file location, configured module search path,
 # module location, executable location and exit
@@ -130,14 +96,14 @@ ansible --version
 ```
 
 ```
-ansible [core 2.17.1]
+ansible [core 2.18.5]
   config file = None
-  configured module search path = ['/home/alma/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /home/alma/.local/lib/python3.9/site-packages/ansible
-  ansible collection location = /home/alma/.ansible/collections:/usr/share/ansible/collections
-  executable location = /home/alma/.local/bin/ansible
-  python version = 3.x.x (main, Jan 24 2024, 00:00:00) [GCC 11.4.1 20231218 (Red Hat 11.4.1-3)] (/usr/bin/python3)
-  jinja version = 3.1.4
+  configured module search path = ['/home/ubuntu/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /home/ubuntu/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible
+  ansible collection location = /home/ubuntu/.ansible/collections:/usr/share/ansible/collections
+  executable location = /home/ubuntu/.local/bin/ansible
+  python version = 3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0] (/home/ubuntu/.local/share/pipx/venvs/ansible/bin/python)
+  jinja version = 3.1.6
   libyaml = True
 ```
 
@@ -156,6 +122,8 @@ IP_ADDRESS_OF_CONTROLNODE ansible-controlnode
 IP_ADDRESS_OF_NODE1 ansible-node1
 IP_ADDRESS_OF_NODE2 ansible-node2
 ```
+
+[Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup%20SSH%20Key-Based%20Authentication.md)
 
 `ssh` into both nodes.
 
@@ -220,7 +188,7 @@ ansible-node1 | SUCCESS => {
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#valid-variable-names
 
-Note: The headings in brackets are group names. **Dash ("-") is invalid**.
+Note: The headings in brackets are group names. **Dash ("-") is invalid**. **Use underscore ("_")** instead.
 
 `inventory.ini` with groups:
 
@@ -264,7 +232,7 @@ ansible-node[1:2] ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private
 
 ### YAML
 
-YAML guide https://circleci.com/blog/what-is-yaml-a-beginner-s-guide/
+YAML Tutorial https://spacelift.io/blog/yaml
 
 YAML Syntax https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
 
