@@ -107,12 +107,15 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    ```
    # Append the following section to your SSH config file on SSH client.
    # You can "/" on Windows as path delimiter.
+   # StrictHostKeyChecking and UserKnownHostsFile are recommended.
    Host NAME_FOR_SSH_TARGET
      HostName                FQDN_OR_IP_OF_SSH_TARGET
      User                    USERNAME_OF_SSH_TARGET
      IdentityFile            ~/.ssh/PRIVATE_KEY_FILENAME
      ServerAliveInterval     5
      ExitOnForwardFailure    yes
+     StrictHostKeyChecking   no
+     UserKnownHostsFile      /dev/null
    ```
    
    The screenshot below shows a `Host` section with name `devops-vm`.
