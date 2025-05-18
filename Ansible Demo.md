@@ -35,7 +35,7 @@
 
 ### Introduction
 
-This demo setup includes one AlmaLinux 9.4 serving as the Ansible control node and two Ubuntu 24.04 LTS instances as the managed nodes.
+This demo setup includes one AlmaLinux 9.5 serving as the Ansible control node and two Ubuntu 24.04.02 LTS instances as the managed nodes.
 
 > [!IMPORTANT]  
 > This demonstration assumes you are familiar with SSH key-based authentication.
