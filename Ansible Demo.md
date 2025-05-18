@@ -43,6 +43,10 @@ This demo setup includes one AlmaLinux 9.4 serving as the Ansible control node a
 
 ### Ansible Installation Guide
 
+
+https://github.com/user-attachments/assets/711121ac-b081-45bd-b574-2a0757a11ec3
+
+
 https://docs.ansible.com/ansible/latest/installation_guide/index.html
 
 ```shell
