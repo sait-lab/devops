@@ -5,9 +5,9 @@
    * [Ansible Demo](#ansible-demo)
       * [Introduction](#introduction)
       * [Ansible Installation Guide](#ansible-installation-guide)
-         * [Installing Ansible on RHEL/AlmaLinux/Rocky Linux](#installing-ansible-on-rhelalmalinuxrocky-linux)
-         * [Upgrading Ansible on RHEL/AlmaLinux/Rocky Linux](#upgrading-ansible-on-rhelalmalinuxrocky-linux)
-         * [Installing Ansible on Debian/Ubuntu](#installing-ansible-on-debianubuntu)
+         * [Installing pipx](#installing-pipx)
+         * [Installing Ansible](#installing-ansible)
+         * [Upgrading Ansible](#upgrading-ansible)
          * [Show Ansible's Version](#show-ansibles-version)
       * [Verify ssh Connectivity of Ansible Managed Nodes](#verify-ssh-connectivity-of-ansible-managed-nodes)
       * [Building Ansible Inventories](#building-ansible-inventories)
@@ -57,7 +57,9 @@ python3 -V
 # Python 3.12.x on Ubuntu 24.04.2 LTS
 ```
 
-Installing `pipx`. https://pipx.pypa.io/stable/
+#### Installing `pipx`
+
+https://pipx.pypa.io/stable/
 
 ```shell
 # Install pipx on RHEL/AlmaLinux/Rocky Linux
