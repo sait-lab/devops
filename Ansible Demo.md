@@ -82,6 +82,12 @@ https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.ht
 pipx install --include-deps ansible
 ```
 
+Install dependencies required for Ansible modules
+
+```shell
+pipx inject ansible proxmoxer requests
+```
+
 #### Upgrading Ansible
 
 ```shell
