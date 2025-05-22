@@ -21,6 +21,10 @@
 
 https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc3072481
 
+> [!IMPORTANT]
+> If you are generating ssh keys in Windows, the following demo code works in Command Prompt instead of PowerShell.
+
+
 1. Verify that you can use username and password to connect to the SSH target.
    ```shell
    ssh USERNAME_OF_SSH_TARGET@FQDN_OR_IP_ADDR_OF_SSH_TARGET
