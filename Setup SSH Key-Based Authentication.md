@@ -102,6 +102,9 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    
    If you don't have `"%USERPROFILE%\.ssh\config"` file on Microsoft Windows or `~/.ssh/config` file on Linux or macOS, create one. **If the SSH config already exists, append** the Host section for the SSH target to the config file.
 
+   When creating the `config` file, make sure to save it as `config` without the `.txt` extension. Some text editors may automatically append `.txt` to the filename, so double-check the file name before saving.
+   ![save-as](./Setup%20SSH%20Key-Based%20Authentication.assets/save-as.webp)
+   
    [SSH config file syntax and how-tos for configuring the OpenSSH client](https://www.ssh.com/academy/ssh/config)
    
    ```
