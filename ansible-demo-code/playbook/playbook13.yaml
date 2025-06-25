@@ -12,3 +12,11 @@
         name: lighttpd
         update_cache: true
         state: present
+
+    - name: Copy local index.html file to web servers
+      ansible.builtin.copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'

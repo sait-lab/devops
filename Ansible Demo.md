@@ -107,14 +107,14 @@ pipx upgrade --include-injected ansible
 ansible --version
 ```
 
-```
-ansible [core 2.18.5]
+```shell
+ansible [core 2.18.6]
   config file = None
   configured module search path = ['/home/ubuntu/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
   ansible python module location = /home/ubuntu/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible
   ansible collection location = /home/ubuntu/.ansible/collections:/usr/share/ansible/collections
   executable location = /home/ubuntu/.local/bin/ansible
-  python version = 3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0] (/home/ubuntu/.local/share/pipx/venvs/ansible/bin/python)
+  python version = 3.12.3 (main, Jun 18 2025, 17:59:45) [GCC 13.3.0] (/home/ubuntu/.local/share/pipx/venvs/ansible/bin/python)
   jinja version = 3.1.6
   libyaml = True
 ```
@@ -137,7 +137,7 @@ IP_ADDRESS_OF_NODE2 ansible-node2
 
 [Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup%20SSH%20Key-Based%20Authentication.md)
 
-`ssh` into both nodes.
+`ssh` into both nodes to verify `ssh` connectivity.
 
 
 
@@ -158,8 +158,8 @@ touch ~/ansible-demo/inventory/inventory.ini
 `inventory.ini`:
 
 ```ini
-ansible-node1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
-ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
+ansible-node1 ansible_connection=ssh ansible_user=student ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
+ansible-node2 ansible_connection=ssh ansible_user=student ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 ```
 
 ```shell
@@ -200,16 +200,18 @@ ansible-node1 | SUCCESS => {
 
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#valid-variable-names
 
-Note: The headings in brackets are group names. **Dash ("-") is invalid**. **Use underscore ("_")** instead.
+> [!NOTE]
+>
+> The headings in brackets are group names. **Dash ("-") is invalid**. **Use underscore ("_")** instead.
 
 `inventory.ini` with groups:
 
 ```ini
 [web_srv_1]
-ansible-node1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
+ansible-node1 ansible_connection=ssh ansible_user=student ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 
 [web_srv_2]
-ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
+ansible-node2 ansible_connection=ssh ansible_user=student ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 ```
 ```shell
 # ping managed nodes in web_srv_1 group
@@ -231,9 +233,9 @@ If you have a lot of hosts with a similar pattern, you can add them as a range r
 
 ```ini
 [web_srv]
-ansible-node[1:2] ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
+ansible-node[1:2] ansible_connection=ssh ansible_user=student ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 
-#ansible-node2 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
+#ansible-node2 ansible_connection=ssh ansible_user=student ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 ```
 
 
@@ -269,7 +271,7 @@ Create `~/.ssh/config`
 Host ansible-node1
   HostName                  IP_ADDRESS_OR_FQDN_OF_NODE1
   Port                      22
-  User                      ubuntu
+  User                      student
   IdentityFile              ~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
   ServerAliveInterval       5
   ExitOnForwardFailure      yes
@@ -277,7 +279,7 @@ Host ansible-node1
 Host ansible-node2
   HostName                  IP_ADDRESS_OR_FQDN_OF_NODE2
   Port                      22
-  User                      ubuntu
+  User                      student
   IdentityFile              ~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
   ServerAliveInterval       5
   ExitOnForwardFailure      yes
@@ -296,6 +298,15 @@ $ ls -l ~/ansible-demo/playbook/
 total 4
 -rw-r--r--. 1 alma alma 84 Jun 18 00:56 inventory.ini
 -rw-r--r--. 1 alma alma  0 Jun 18 00:53 playbook1.yaml
+```
+
+Optional: Create a `ansible.cfg` in current directory to suppress Python interpreter warnings. More on `ansible.cfg` later.
+
+`ansible.cfg`
+
+```
+[defaults]
+interpreter_python = auto_silent
 ```
 
 `playbook1.yaml`
@@ -336,6 +347,7 @@ https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_checkmode.html
 Check mode is just a simulation. It will not generate output for tasks that use [conditionals based on registered variables](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html#conditionals-registered-vars) (results of prior tasks). However, it is great for validating configuration management playbooks that run on one node at a time.
 
 ```shell
+# You will not see => {"changed": false, "ping": "pong"} in the output
 ansible-playbook --check playbook1.yaml -i inventory.ini
 ```
 
@@ -370,36 +382,36 @@ ansible web_srv -m command -a "hostnamectl" -i inventory.ini
 ```
 
 ```
-ansible-node1 | CHANGED | rc=0 >>
- Static hostname: ansible-node1
-       Icon name: computer-vm
-         Chassis: vm
-      Machine ID: 3e486d594e7bb2048e09d8e066712705
-         Boot ID: 761d97b73559476bb2626e97362e32c9
-  Virtualization: vmware
-Operating System: Ubuntu 24.04 LTS
-          Kernel: Linux 6.8.0-35-generic
-    Architecture: x86-64
- Hardware Vendor: VMware, Inc.
-  Hardware Model: VMware Virtual Platform
-Firmware Version: 6.00
-   Firmware Date: Thu 2020-11-12
-    Firmware Age: 3y 7month 5d
 ansible-node2 | CHANGED | rc=0 >>
- Static hostname: ansible-node2
+ Static hostname: noble-clone-2
        Icon name: computer-vm
          Chassis: vm
-      Machine ID: 208764583c135fadff15af416671270f
-         Boot ID: 3592de635eea4ef199972ccccfddee4f
-  Virtualization: vmware
-Operating System: Ubuntu 24.04 LTS
-          Kernel: Linux 6.8.0-35-generic
+      Machine ID: d42d70df884b4324a120dbf85247f7a2
+         Boot ID: 43b5ac072a3f4beabcc72edf0cea8280
+  Virtualization: kvm
+Operating System: Ubuntu 24.04.2 LTS
+          Kernel: Linux 6.8.0-62-generic
     Architecture: x86-64
- Hardware Vendor: VMware, Inc.
-  Hardware Model: VMware Virtual Platform
-Firmware Version: 6.00
-   Firmware Date: Thu 2020-11-12
-    Firmware Age: 3y 7month 5d
+ Hardware Vendor: QEMU
+  Hardware Model: Standard PC _Q35 + ICH9, 2009_
+Firmware Version: 3.20230228-4
+   Firmware Date: Tue 2023-06-06
+    Firmware Age: 2y 2w 5d
+ansible-node1 | CHANGED | rc=0 >>
+ Static hostname: noble-clone-1
+       Icon name: computer-vm
+         Chassis: vm
+      Machine ID: 6d053c6e5f3d48ac898d6091f8f31bfd
+         Boot ID: 4610ac0fe50543f6b0efe0b96c4dc988
+  Virtualization: kvm
+Operating System: Ubuntu 24.04.2 LTS
+          Kernel: Linux 6.8.0-62-generic
+    Architecture: x86-64
+ Hardware Vendor: QEMU
+  Hardware Model: Standard PC _Q35 + ICH9, 2009_
+Firmware Version: 3.20230228-4
+   Firmware Date: Tue 2023-06-06
+    Firmware Age: 2y 2w 5d
 ```
 
 From playbooks, Ansible modules are executed in a very similar way. `playbook2.yaml`
@@ -427,8 +439,8 @@ ok: [ansible-node1]
 ok: [ansible-node2]
 
 TASK [query hostname and related settings] **********************************************************************************
-changed: [ansible-node2] => {"changed": true, "cmd": ["hostnamectl"], "delta": "0:00:00.156681", "end": "2024-06-18 01:09:38.058298", "msg": "", "rc": 0, "start": "2024-06-18 01:09:37.901617", "stderr": "", "stderr_lines": [], "stdout": " Static hostname: ansible-node2\n       Icon name: computer-vm\n         Chassis: vm \n      Machine ID: 208764583c135fadff15af416671270f\n         Boot ID: 3592de635eea4ef199972ccccfddee4f\n  Virtualization: vmware\nOperating System: Ubuntu 24.04 LTS\n          Kernel: Linux 6.8.0-35-generic\n    Architecture: x86-64\n Hardware Vendor: VMware, Inc.\n  Hardware Model: VMware Virtual Platform\nFirmware Version: 6.00\n   Firmware Date: Thu 2020-11-12\n    Firmware Age: 3y 7month 5d", "stdout_lines": [" Static hostname: ansible-node2", "       Icon name: computer-vm", "         Chassis: vm", "      Machine ID: 208764583c135fadff15af416671270f", "         Boot ID: 3592de635eea4ef199972ccccfddee4f", "  Virtualization: vmware", "Operating System: Ubuntu 24.04 LTS", "          Kernel: Linux 6.8.0-35-generic", "    Architecture: x86-64", " Hardware Vendor: VMware, Inc.", "  Hardware Model: VMware Virtual Platform", "Firmware Version: 6.00", "   Firmware Date: Thu 2020-11-12", "    Firmware Age: 3y 7month 5d"]}
-changed: [ansible-node1] => {"changed": true, "cmd": ["hostnamectl"], "delta": "0:00:00.153781", "end": "2024-06-18 01:09:38.086830", "msg": "", "rc": 0, "start": "2024-06-18 01:09:37.933049", "stderr": "", "stderr_lines": [], "stdout": " Static hostname: ansible-node1\n       Icon name: computer-vm\n         Chassis: vm \n      Machine ID: 3e486d594e7bb2048e09d8e066712705\n         Boot ID: 761d97b73559476bb2626e97362e32c9\n  Virtualization: vmware\nOperating System: Ubuntu 24.04 LTS\n          Kernel: Linux 6.8.0-35-generic\n    Architecture: x86-64\n Hardware Vendor: VMware, Inc.\n  Hardware Model: VMware Virtual Platform\nFirmware Version: 6.00\n   Firmware Date: Thu 2020-11-12\n    Firmware Age: 3y 7month 5d", "stdout_lines": [" Static hostname: ansible-node1", "       Icon name: computer-vm", "         Chassis: vm", "      Machine ID: 3e486d594e7bb2048e09d8e066712705", "         Boot ID: 761d97b73559476bb2626e97362e32c9", "  Virtualization: vmware", "Operating System: Ubuntu 24.04 LTS", "          Kernel: Linux 6.8.0-35-generic", "    Architecture: x86-64", " Hardware Vendor: VMware, Inc.", "  Hardware Model: VMware Virtual Platform", "Firmware Version: 6.00", "   Firmware Date: Thu 2020-11-12", "    Firmware Age: 3y 7month 5d"]}
+changed: [ansible-node2] => {"changed": true, "cmd": ["hostnamectl"], "delta": "0:00:00.162520", "end": "2025-06-25 05:38:45.803362", "msg": "", "rc": 0, "start": "2025-06-25 05:38:45.640842", "stderr": "", "stderr_lines": [], "stdout": " Static hostname: noble-clone-2\n       Icon name: computer-vm\n         Chassis: vm \n      Machine ID: d42d70df884b4324a120dbf85247f7a2\n         Boot ID: 43b5ac072a3f4beabcc72edf0cea8280\n  Virtualization: kvm\nOperating System: Ubuntu 24.04.2 LTS\n          Kernel: Linux 6.8.0-62-generic\n    Architecture: x86-64\n Hardware Vendor: QEMU\n  Hardware Model: Standard PC _Q35 + ICH9, 2009_\nFirmware Version: 3.20230228-4\n   Firmware Date: Tue 2023-06-06\n    Firmware Age: 2y 2w 5d", "stdout_lines": [" Static hostname: noble-clone-2", "       Icon name: computer-vm", "         Chassis: vm ", "      Machine ID: d42d70df884b4324a120dbf85247f7a2", "         Boot ID: 43b5ac072a3f4beabcc72edf0cea8280", "  Virtualization: kvm", "Operating System: Ubuntu 24.04.2 LTS", "          Kernel: Linux 6.8.0-62-generic", "    Architecture: x86-64", " Hardware Vendor: QEMU", "  Hardware Model: Standard PC _Q35 + ICH9, 2009_", "Firmware Version: 3.20230228-4", "   Firmware Date: Tue 2023-06-06", "    Firmware Age: 2y 2w 5d"]}
+changed: [ansible-node1] => {"changed": true, "cmd": ["hostnamectl"], "delta": "0:00:00.178076", "end": "2025-06-25 05:38:45.831380", "msg": "", "rc": 0, "start": "2025-06-25 05:38:45.653304", "stderr": "", "stderr_lines": [], "stdout": " Static hostname: noble-clone-1\n       Icon name: computer-vm\n         Chassis: vm \n      Machine ID: 6d053c6e5f3d48ac898d6091f8f31bfd\n         Boot ID: 4610ac0fe50543f6b0efe0b96c4dc988\n  Virtualization: kvm\nOperating System: Ubuntu 24.04.2 LTS\n          Kernel: Linux 6.8.0-62-generic\n    Architecture: x86-64\n Hardware Vendor: QEMU\n  Hardware Model: Standard PC _Q35 + ICH9, 2009_\nFirmware Version: 3.20230228-4\n   Firmware Date: Tue 2023-06-06\n    Firmware Age: 2y 2w 5d", "stdout_lines": [" Static hostname: noble-clone-1", "       Icon name: computer-vm", "         Chassis: vm ", "      Machine ID: 6d053c6e5f3d48ac898d6091f8f31bfd", "         Boot ID: 4610ac0fe50543f6b0efe0b96c4dc988", "  Virtualization: kvm", "Operating System: Ubuntu 24.04.2 LTS", "          Kernel: Linux 6.8.0-62-generic", "    Architecture: x86-64", " Hardware Vendor: QEMU", "  Hardware Model: Standard PC _Q35 + ICH9, 2009_", "Firmware Version: 3.20230228-4", "   Firmware Date: Tue 2023-06-06", "    Firmware Age: 2y 2w 5d"]}
 
 PLAY RECAP ******************************************************************************************************************
 ansible-node1              : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
@@ -556,7 +568,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#defining-variables-in-included-files-and-roles
 
 ```shell
-mkdir ~/ansible-demo/playbook/vars
+mkdir -p ~/ansible-demo/playbook/vars
 touch ~/ansible-demo/playbook/vars/greeting_vars.yaml
 ```
 
@@ -619,17 +631,17 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html
 
 ```shell
-touch ~/ansible-demo/playbook/vars/esxi_hosts.yaml
+mkdir -p ~/ansible-demo/playbook/vars
+touch ~/ansible-demo/playbook/vars/cloned_vms.yaml
 ```
 
-`vars/esxi_hosts.yaml`
+`vars/cloned_vms.yaml`
 
 ```yaml
 ---
-esxi_hosts:
-  - "10.1.0.11"
-  - "10.1.0.21"
-  - "10.1.0.31"
+cloned_vms:
+  - "10.5.0.131"
+  - "10.5.0.133"
 ```
 
 `playbook6.yaml`
@@ -646,14 +658,14 @@ esxi_hosts:
     - test3
 
   vars_files:
-    - "vars/esxi_hosts.yaml"
+    - "vars/cloned_vms.yaml"
 
   tasks:
     - name: Loop demo
       debug:
         msg:
         - "{{ test }}"
-        - "{{ esxi_hosts }}"
+        - "{{ cloned_vms }}"
 ```
 
 ```shell
@@ -667,7 +679,7 @@ ansible-playbook playbook6.yaml
 
 PLAY [Hello World] **********************************************************************************************************
 
-TASK [Loop demo] ************************************************************************************************************
+TASK [Loop demo] **********************************************************************************************************
 ok: [localhost] => {
     "msg": [
         [
@@ -676,9 +688,8 @@ ok: [localhost] => {
             "test3"
         ],
         [
-            "10.1.0.11",
-            "10.1.0.21",
-            "10.1.0.31"
+            "10.5.0.131",
+            "10.5.0.133"
         ]
     ]
 }
@@ -711,7 +722,7 @@ loop: "{{ somelist }}"
     - test3
 
   vars_files:
-    - "vars/esxi_hosts.yaml"
+    - "vars/cloned_vms.yaml"
 
   tasks:
     - name: Loop demo
@@ -769,7 +780,7 @@ When you use `register` with a loop, the data structure placed in the variable w
     - test3
 
   vars_files:
-    - "vars/esxi_hosts.yaml"
+    - "vars/cloned_vms.yaml"
 
   tasks:
     - name: Loop demo
@@ -846,8 +857,8 @@ Content of `inventory.ini` file:
 
 ```ini
 [web_srv]
-ansible-node1 ansible_connection=ssh port=443
-ansible-node2 ansible_connection=ssh port=443
+ansible-node1 ansible_connection=ssh api_port=443
+ansible-node2 ansible_connection=ssh api_port=443
 ```
 
 Store variables in the main inventory file: `inventory9.ini`. Extract common vars out:
@@ -859,7 +870,7 @@ ansible-node2
 
 [web_srv:vars]
 ansible_connection=ssh
-port=443
+api_port=443
 ```
 
 `playbook9.yaml`
@@ -874,7 +885,7 @@ port=443
   tasks:
     - name: test vars
       debug:
-        msg: "ansible_user={{ ansible_connection }} port={{ port }}"
+        msg: "ansible_user={{ ansible_connection }} api_port={{ api_port }}"
 ```
 
 ```shell
@@ -887,10 +898,10 @@ PLAY [Hello World] *************************************************************
 
 TASK [test vars] ************************************************************************************************************
 ok: [ansible-node1] => {
-    "msg": "ansible_user=ssh port=443"
+    "msg": "ansible_user=ssh api_port=443"
 }
 ok: [ansible-node2] => {
-    "msg": "ansible_user=ssh port=443"
+    "msg": "ansible_user=ssh api_port=443"
 }
 
 PLAY RECAP ******************************************************************************************************************
@@ -898,22 +909,22 @@ ansible-node1              : ok=1    changed=0    unreachable=0    failed=0    s
 ansible-node2              : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-Node specific vars (port=80 of ansible-node1) overwrite group vars.
+Node specific vars (`api_port=80` of ansible-node1) overwrite group vars.
 
 `inventory9-2.ini`
 
 ```ini
 [web_srv]
-ansible-node1 port=80
+ansible-node1 api_port=80
 ansible-node2
 
 [web_srv:vars]
 ansible_connection=ssh
-port=443
+api_port=443
 ```
 
 ```shell
-# Node specific vars (port=80 of ansible-node1) overwrite group vars.
+# Node specific vars (api_port=80 of ansible-node1) overwrite group vars.
 ansible-playbook -i inventory9-2.ini playbook9.yaml
 ```
 
@@ -922,10 +933,10 @@ PLAY [Hello World] *************************************************************
 
 TASK [test vars] ************************************************************************************************************
 ok: [ansible-node1] => {
-    "msg": "ansible_user=ssh port=80"
+    "msg": "ansible_user=ssh api_port=80"
 }
 ok: [ansible-node2] => {
-    "msg": "ansible_user=ssh port=443"
+    "msg": "ansible_user=ssh api_port=443"
 }
 
 PLAY RECAP ******************************************************************************************************************
@@ -960,13 +971,13 @@ Content of `~/ansible-demo/playbook/inventory/group_vars/web_srv.yaml`
 
 ```yaml
 ansible_connection: ssh
-port: 443
+api_port: 443
 ```
 
 Content of `~/ansible-demo/playbook/inventory/host_vars/ansible-node1.yaml`
 
 ```yaml
-port: 80
+api_port: 80
 ```
 
 Content of `~/ansible-demo/playbook/inventory/host`
@@ -987,10 +998,10 @@ PLAY [Hello World] *************************************************************
 
 TASK [test vars] ************************************************************************************************************
 ok: [ansible-node1] => {
-    "msg": "ansible_user=ssh port=80"
+    "msg": "ansible_user=ssh api_port=80"
 }
 ok: [ansible-node2] => {
-    "msg": "ansible_user=ssh port=443"
+    "msg": "ansible_user=ssh api_port=443"
 }
 
 PLAY RECAP ******************************************************************************************************************
@@ -1021,6 +1032,8 @@ Changes can be made and used in a configuration file which will be searched for 
 > - `~/.ansible.cfg` (in the home directory)
 > - `/etc/ansible/ansible.cfg`
 
+Use `ansible --version` command to see which `ansible.cfg` will be used.
+
 Ansible will process the above list and use the first file found, all others are ignored.
 
 ```shell
@@ -1033,6 +1046,7 @@ Content of `~/ansible-demo/playbook/ansible.cfg`
 [defaults]
 inventory = inventory/host
 host_key_checking = False
+interpreter_python = auto_silent
 ```
 
 Now the command line arg `-i inventory/host` can be omitted:
@@ -1071,9 +1085,9 @@ echo "demo" > ~/ansible-demo/playbook/demo.conf
     - name: copy file
       ansible.builtin.copy:
         src: demo.conf
-        dest: /home/ubuntu/demo.conf
-        owner: ubuntu
-        group: ubuntu
+        dest: /home/student/demo.conf
+        owner: student
+        group: student
         mode: '0644'
 ```
 
@@ -1095,14 +1109,78 @@ ansible-node2              : ok=1    changed=1    unreachable=0    failed=0    s
 ```
 
 ```shell
-# Verifys the copied files on managed nodes
-ssh ansible-node1 cat /home/ubuntu/demo.conf
-ssh ansible-node2 cat /home/ubuntu/demo.conf
+# Verify the copied files on managed nodes
+ssh ansible-node1 cat /home/student/demo.conf
+ssh ansible-node2 cat /home/student/demo.conf
 ```
 
 ```
 demo
 demo
+```
+
+> [!NOTE]
+>
+> You can also use `content: "YOUR_CONTENT_HERE"` to replace `src: demo.conf` in `copy` module.
+
+
+
+---
+
+
+
+### ansible.builtin.lineinfile module – Manage lines in text files
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_module.html
+
+This module ensures a particular line is in a file, or replace an existing line using a back-referenced regular expression. This is primarily useful when you want to change a single line in a file only.
+
+`playbook11.yaml`
+
+```yaml
+---
+
+- name: ansible.builtin.lineinfile module
+  hosts: web_srv
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: ensures a particular line is in /etc/hosts file
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: "10.5.0.133 vm-2"
+        state: present
+```
+
+```shell
+# Verify the content of /etc/hosts files before running the playbook
+ssh ansible-node1 cat /etc/hosts
+ssh ansible-node2 cat /etc/hosts
+```
+
+```shell
+# Use ansible.builtin.lineinfile module to ensure a particular
+# line is in /etc/hosts file
+ansible-playbook playbook11.yaml
+```
+
+```
+PLAY [ansible.builtin.lineinfile module] **********************************************************************************
+
+TASK [ensures a particular line is in /etc/hosts file] ********************************************************************
+changed: [ansible-node2]
+changed: [ansible-node1]
+
+PLAY RECAP ****************************************************************************************************************
+ansible-node1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ansible-node2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+```
+# Verify the content of /etc/hosts files after running the playbook
+ssh ansible-node1 cat /etc/hosts
+ssh ansible-node2 cat /etc/hosts
 ```
 
 
@@ -1141,7 +1219,7 @@ ssh ansible-node2 systemctl status lighttpd
 Unit lighttpd.service could not be found.
 ```
 
-`playbook11.yaml`
+`playbook12.yaml`
 
 ```yaml
 ---
@@ -1161,7 +1239,7 @@ Unit lighttpd.service could not be found.
 ```
 ```shell
 # Install lighttpd package on Ubuntu Linux servers
-ansible-playbook playbook11.yaml
+ansible-playbook playbook12.yaml
 ```
 ```
 PLAY [Install lighttpd package on Ubuntu Linux servers] *********************************************************************
@@ -1205,7 +1283,7 @@ curl http://ansible-node1
 ...
 ```
 
-
+You can create two tasks in a playbook: one to install an HTTP server daemon and another to copy the `index.html` file to the web server. Simply add another task block under `tasks`.
 
 Create a local `index.html`:
 
@@ -1213,7 +1291,7 @@ Create a local `index.html`:
 echo "Peter Parker was here" > index.html
 ```
 
-`playbook12.yaml`
+`playbook13.yaml`
 
 ```shell
 ---
@@ -1235,14 +1313,14 @@ echo "Peter Parker was here" > index.html
       ansible.builtin.copy:
         src: index.html
         dest: /var/www/html/index.html
-        owner: ubuntu
-        group: ubuntu
+        owner: student
+        group: student
         mode: '0644'
 ```
 
 ```shell
 # Install lighttpd package and copy index.html file to Ubuntu Linux servers
-ansible-playbook playbook12.yaml
+ansible-playbook playbook13.yaml
 ```
 
 ```

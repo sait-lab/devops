@@ -9,7 +9,7 @@
     - test3
 
   vars_files:
-    - "vars/esxi_hosts.yaml"
+    - "vars/cloned_vms.yaml"
 
   tasks:
     - name: Loop demo

@@ -1,4 +1,5 @@
 ---
+
 - name: Hello World
   hosts: web_srv
   gather_facts: no
@@ -6,4 +7,4 @@
   tasks:
     - name: test vars
       debug:
-        msg: "ansible_user={{ ansible_connection }} port={{ port }}"
+        msg: "ansible_user={{ ansible_connection }} api_port={{ api_port }}"
