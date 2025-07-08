@@ -1193,6 +1193,16 @@ ssh ansible-node1 cat /etc/hosts
 ssh ansible-node2 cat /etc/hosts
 ```
 
+To make the code more robust, first ensure the line that contains the hostname "vm" does NOT exist in `/etc/hosts` file:
+
+```yaml
+    - name: ensures a particular line is in /etc/hosts file
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: '.*vm.*'
+        state: absent
+```
+
 
 
 ---
