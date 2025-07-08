@@ -44,6 +44,8 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    mkdir "%USERPROFILE%\.ssh"
    cd "%USERPROFILE%\.ssh"
    ssh-keygen -t ed25519 -f "%USERPROFILE%\.ssh\YOUR_KEY_NAME" -C "John Doe"
+   
+   : If you got an error, read important note above step 1.
    ```
 
    ```shell
@@ -65,6 +67,8 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    ```cmd
    : On Microsoft Windows
    type "%USERPROFILE%\.ssh\YOUR_KEY_NAME.pub"
+   
+   : If you got an error, read important note above step 1.
    ```
 
    ```shell
@@ -93,6 +97,8 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    : If your Windows still complains about file not found
    cd "%USERPROFILE%\.ssh\"
    ssh -i YOUR_KEY_NAME USERNAME@FQDN_OR_IP_ADDR_OF_SSH_TARGET
+   
+   : If you got an error, read important note above step 1.
    ```
 
    ```shell
@@ -109,10 +115,18 @@ https://github.com/sait-lab/devops/assets/81775267/df082d3e-b538-4cce-8c14-780dc
    When creating the `config` file, make sure to save it as `config` without the `.txt` extension. Some text editors may automatically append `.txt` to the filename, so **double-check the file name before saving**.
    ![save-as](./Setup%20SSH%20Key-Based%20Authentication.assets/save-as.webp)
    
-   If you already saved the `config` file as `config.txt`, in your Command Prompt, rename it by running 
+   After saving the `config` file, double-check if the filename has `.txt` extension.
    
    ```shell
-   ren "%USERPROFILE%\.ssh\config.txt" "%USERPROFILE%\.ssh\config"
+   cd "%USERPROFILE%/.ssh/"
+   dir config
+   ```
+   
+   If you see 'File Not Found' in the output, most likely it's been saved as `config.txt`. In your **Command Prompt**, rename it by running the following command in **Command Prompt** instead of PowerShell:
+   
+   ```shell
+   cd "%USERPROFILE%/.ssh/"
+   ren config.txt config
    ```
    
    [SSH config file syntax and how-tos for configuring the OpenSSH client](https://www.ssh.com/academy/ssh/config)
