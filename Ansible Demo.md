@@ -414,7 +414,9 @@ Firmware Version: 3.20230228-4
     Firmware Age: 2y 2w 5d
 ```
 
-From playbooks, Ansible modules are executed in a very similar way. `playbook2.yaml`
+From playbooks, Ansible modules are executed in a very similar way.
+
+`playbook2.yaml`
 
 ```yaml
 - name: module-demo
@@ -446,6 +448,14 @@ PLAY RECAP *********************************************************************
 ansible-node1              : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ansible-node2              : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+
+> [!NOTE]
+>
+> https://man7.org/linux/man-pages/man1/hostnamectl.1.html
+>
+> You can use `hostnamectl hostname [NAME]` command to change the system hostname to `NAME`. 
+>
+> You may require root privileges to modify the hostname. More on [privilege escalation](#understanding-privilege-escalation-become).
 
 You can access the documentation for each module from the command line with the ansible-doc tool.
 
