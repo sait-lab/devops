@@ -35,7 +35,7 @@
 
 ### Introduction
 
-This demo setup includes one AlmaLinux 9.5 serving as the Ansible control node and two Ubuntu 24.04.02 LTS instances as the managed nodes.
+This demo setup includes one Ubuntu 24.04.02 LTS instance serving as the Ansible control node and two Ubuntu 24.04.02 LTS instances as the managed nodes.
 
 > [!IMPORTANT]  
 > This demonstration assumes you are familiar with SSH key-based authentication.
@@ -53,7 +53,8 @@ https://docs.ansible.com/ansible/latest/installation_guide/index.html
 # Verify Python version
 python3 -V
 
-# Python 3.9.xx on RHEL/AlmaLinux/Rocky Linux 9.5
+# Python 3.9.xx on RHEL/AlmaLinux/Rocky Linux 9.6
+# Python 3.12.xx on RHEL/AlmaLinux/Rocky Linux 10.0
 # Python 3.12.x on Ubuntu 24.04.2 LTS
 ```
 
@@ -99,7 +100,7 @@ pipx upgrade --include-injected ansible
 
 > [!NOTE]   
 >
-> Due to the preinstalled Python version (3.9.x) on RHEL/Alma/Rocky Linux, which is no longer supported by Ansible, pipx will install ansible-core 2.15.x instead of the latest version (2.18.x).
+> Due to the preinstalled Python version (3.9.x) on RHEL/Alma/Rocky Linux 9.6, which is no longer supported by Ansible, pipx will install ansible-core 2.15.x instead of the latest version (2.18.x).
 
 ```shell
 # Show Ansible's version number, config file location, configured module search path,
@@ -108,7 +109,7 @@ ansible --version
 ```
 
 ```shell
-ansible [core 2.18.6]
+ansible [core 2.18.7]
   config file = None
   configured module search path = ['/home/ubuntu/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
   ansible python module location = /home/ubuntu/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible
