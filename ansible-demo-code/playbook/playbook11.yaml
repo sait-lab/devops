@@ -1,13 +1,11 @@
 ---
-- name: ansible.builtin.lineinfile module
+
+- name: ansible.builtin.fetch module
   hosts: web_srv
-  become: true
-  become_method: sudo
   gather_facts: no
 
   tasks:
-    - name: ensures a particular line is in /etc/hosts file
-      ansible.builtin.lineinfile:
-        path: /etc/hosts
-        line: "10.5.0.133 vm-2"
-        state: present
+    - name: fetch file
+      ansible.builtin.fetch:
+        src: /home/student/demo.conf
+        dest: /tmp

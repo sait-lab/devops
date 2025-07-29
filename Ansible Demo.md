@@ -27,6 +27,9 @@
       * [ansible.cfg](#ansiblecfg)
          * [The configuration file](#the-configuration-file)
       * [ansible.builtin.copy module – Copy files to remote locations](#ansiblebuiltincopy-module--copy-files-to-remote-locations)
+      * [ansible.builtin.fetch module – Fetch files from remote nodes](#ansiblebuiltinfetch-module--fetch-files-from-remote-nodes)
+      * [Registering variables](#registering-variables)
+      * [ansible.builtin.lineinfile module – Manage lines in text files](#ansiblebuiltinlineinfile-module--manage-lines-in-text-files)
       * [Understanding privilege escalation: become](#understanding-privilege-escalation-become)
 
 
@@ -1140,13 +1143,82 @@ demo
 
 
 
+### ansible.builtin.fetch module – Fetch files from remote nodes
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fetch_module.html
+
+This module works like ansible.builtin.copy, but in reverse. It is used for fetching files from remote machines and storing them locally in a file tree, organized by hostname. Files that already exist at `dest` will be overwritten if they are different than the `src`.
+
+`playbook11.yaml`
+
+```yaml
+---
+
+- name: ansible.builtin.fetch module
+  hosts: web_srv
+  gather_facts: no
+
+  tasks:
+    - name: fetch file
+      ansible.builtin.fetch:
+        src: /home/student/demo.conf
+        dest: /tmp
+```
+
+If `dest=/tmp`, then `src=/home/student/demo.conf` on node `ansible-node1`, would save the file into `/tmp/ansible-node1/home/student/demo.conf`. The host name is based on the inventory name.
+
+
+
+---
+
+
+
+### Registering variables
+
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#registering-variables
+
+You can create variables from the output of an Ansible task with the task keyword `register`. You can use **register**ed variables in any later tasks in your play. 
+
+`playbook12.yaml`
+
+```yaml
+---
+
+- name: registering variables
+  hosts: web_srv
+  gather_facts: no
+
+  tasks:
+    - name: read a file to output
+      ansible.builtin.command:
+        cmd: cat "/tmp/ansible-node1/home/student/demo.conf"
+      delegate_to: localhost
+      register: content_of_demo_conf
+
+    - name: show the content of the conf file
+      ansible.builtin.debug:
+        msg: "{{ content_of_demo_conf }}"
+```
+
+> [!NOTE]
+>
+> `delegate_to: localhost` in the "read a file to output" task is necessary. Without this line, Ansible will run the `cat "/tmp/ansible-node1/home/student/demo.conf"` command on managed nodes, which don't have the files in `/tmp` directory.
+>
+> Read more on [Controlling where tasks run: delegation and local actions](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_delegation.html#controlling-where-tasks-run-delegation-and-local-actions)
+
+
+
+---
+
+
+
 ### ansible.builtin.lineinfile module – Manage lines in text files
 
 https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_module.html
 
 This module ensures a particular line is in a file, or replace an existing line using a back-referenced regular expression. This is primarily useful when you want to change a single line in a file only.
 
-`playbook11.yaml`
+`playbook13.yaml`
 
 ```yaml
 ---
@@ -1173,7 +1245,7 @@ ssh ansible-node2 cat /etc/hosts
 ```shell
 # Use ansible.builtin.lineinfile module to ensure a particular
 # line is in /etc/hosts file
-ansible-playbook playbook11.yaml
+ansible-playbook playbook13.yaml
 ```
 
 ```
@@ -1240,7 +1312,7 @@ ssh ansible-node2 systemctl status lighttpd
 Unit lighttpd.service could not be found.
 ```
 
-`playbook12.yaml`
+`playbook14.yaml`
 
 ```yaml
 ---
@@ -1260,7 +1332,7 @@ Unit lighttpd.service could not be found.
 ```
 ```shell
 # Install lighttpd package on Ubuntu Linux servers
-ansible-playbook playbook12.yaml
+ansible-playbook playbook14.yaml
 ```
 ```
 PLAY [Install lighttpd package on Ubuntu Linux servers] *********************************************************************
@@ -1312,7 +1384,7 @@ Create a local `index.html`:
 echo "Peter Parker was here" > index.html
 ```
 
-`playbook13.yaml`
+`playbook15.yaml`
 
 ```shell
 ---
@@ -1341,7 +1413,7 @@ echo "Peter Parker was here" > index.html
 
 ```shell
 # Install lighttpd package and copy index.html file to Ubuntu Linux servers
-ansible-playbook playbook13.yaml
+ansible-playbook playbook15.yaml
 ```
 
 ```
