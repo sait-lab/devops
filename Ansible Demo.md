@@ -141,9 +141,11 @@ IP_ADDRESS_OF_NODE2 ansible-node2
 
 [Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup%20SSH%20Key-Based%20Authentication.md)
 
-From control node, `ssh` into both nodes without password to verify `ssh` connectivity.
+From control node, `ssh` into both managed nodes without password to verify `ssh` connectivity.
 
-
+> [!NOTE]   
+>
+> You may have configured key-based authentication from your desktop/laptop to ssh into the control node without password. But you still need to configure key-based authentication between the control node and managed notes.
 
 ---
 
