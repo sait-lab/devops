@@ -141,7 +141,7 @@ IP_ADDRESS_OF_NODE2 ansible-node2
 
 [Setup SSH Key-Based Authentication](https://github.com/sait-lab/devops/blob/main/Setup%20SSH%20Key-Based%20Authentication.md)
 
-`ssh` into both nodes to verify `ssh` connectivity.
+From control node, `ssh` into both nodes without password to verify `ssh` connectivity.
 
 
 
