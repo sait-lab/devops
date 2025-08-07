@@ -145,7 +145,7 @@ From control node, `ssh` into both managed nodes without password to verify `ssh
 
 > [!NOTE]   
 >
-> You may have configured key-based authentication from your desktop/laptop to ssh into the control node without password. But you still need to configure key-based authentication between the control node and managed notes.
+> You may have set up key-based authentication to SSH from your desktop/laptop to the control node without a password, but you still need to configure key-based authentication between the control node and the managed nodes.
 
 ---
 
