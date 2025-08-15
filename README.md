@@ -13,11 +13,14 @@ This document provides a demonstration on how to set up and use Ansible for auto
 
 This document provides a high-level overview of SSH.
 
-### 3. [GitHub Key-Based SSH Authentication](GitHub%20Key-Based%20SSH%20Authentication.md)
+### 3. [Setup SSH Key-Based Authentication](Setup%20SSH%20Key-Based%20Authentication.md)
+
+This guide covers the steps required to set up SSH key-based authentication for secure access to remote servers.
+
+### 4. [GitHub Key-Based SSH Authentication](GitHub%20Key-Based%20SSH%20Authentication.md)
 This guide covers the process of creating SSH keys and adding them to your GitHub account to enhance security.
 
-### 4. [Setup SSH Key-Based Authentication](Setup%20SSH%20Key-Based%20Authentication.md)
-This guide covers the steps required to set up SSH key-based authentication for secure access to remote servers.
+
 
 ## Contributing
 
