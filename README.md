@@ -9,10 +9,14 @@ Below are the links to the documents available in this repository. Each link pro
 ### 1. [Ansible Demo](Ansible%20Demo.md)
 This document provides a demonstration on how to set up and use Ansible for automating tasks across multiple machines.
 
-### 2. [GitHub Key-Based SSH Authentication](GitHub%20Key-Based%20SSH%20Authentication.md)
+### 2. [SSH Introduction](ssh.md)
+
+This document provides a high-level overview of SSH.
+
+### 3. [GitHub Key-Based SSH Authentication](GitHub%20Key-Based%20SSH%20Authentication.md)
 This guide covers the process of creating SSH keys and adding them to your GitHub account to enhance security.
 
-### 3. [Setup SSH Key-Based Authentication](Setup%20SSH%20Key-Based%20Authentication.md)
+### 4. [Setup SSH Key-Based Authentication](Setup%20SSH%20Key-Based%20Authentication.md)
 This guide covers the steps required to set up SSH key-based authentication for secure access to remote servers.
 
 ## Contributing
