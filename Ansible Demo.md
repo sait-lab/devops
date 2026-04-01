@@ -38,7 +38,7 @@
 
 ### Introduction
 
-This demo setup includes one Ubuntu 24.04.02 LTS instance serving as the Ansible control node and two Ubuntu 24.04.02 LTS instances as the managed nodes.
+This demo setup includes one Ubuntu 24.04.4 LTS instance serving as the Ansible control node and two Ubuntu 24.04.4 LTS instances as the managed nodes.
 
 > [!IMPORTANT]  
 > This demonstration assumes you are familiar with SSH key-based authentication.
@@ -50,15 +50,16 @@ This demo setup includes one Ubuntu 24.04.02 LTS instance serving as the Ansible
 https://github.com/user-attachments/assets/711121ac-b081-45bd-b574-2a0757a11ec3
 
 
-https://docs.ansible.com/ansible/latest/installation_guide/index.html
+https://docs.ansible.com/projects/ansible/latest/installation_guide/index.html
 
 ```shell
 # Verify Python version
 python3 -V
 
-# Python 3.9.xx on RHEL/AlmaLinux/Rocky Linux 9.6
-# Python 3.12.xx on RHEL/AlmaLinux/Rocky Linux 10.0
-# Python 3.12.x on Ubuntu 24.04.2 LTS
+# Python 3.9.xx on RHEL/AlmaLinux/Rocky Linux 9.7
+# Python 3.12.x on RHEL/AlmaLinux/Rocky Linux 10.1
+# Python 3.12.x on Ubuntu 24.04.4 LTS
+# Python 3.14.x on Ubuntu 26.04 LTS
 ```
 
 #### Installing `pipx`
@@ -79,7 +80,7 @@ pipx ensurepath
 
 #### Installing Ansible
 
-https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pipx
+https://docs.ansible.com/projects/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pipx
 
 ```shell
 # Use pipx in your environment to install the full Ansible package:
@@ -103,7 +104,7 @@ pipx upgrade --include-injected ansible
 
 > [!NOTE]   
 >
-> Due to the preinstalled Python version (3.9.x) on RHEL/Alma/Rocky Linux 9.6, which is no longer supported by Ansible, pipx will install ansible-core 2.15.x instead of the latest version (2.18.x).
+> Due to the preinstalled Python version (3.9.x) on RHEL/Alma/Rocky Linux 9.7, which is no longer supported by Ansible, pipx will install ansible-core 2.15.x instead of the latest version (2.20.x).
 
 ```shell
 # Show Ansible's version number, config file location, configured module search path,
@@ -112,15 +113,15 @@ ansible --version
 ```
 
 ```shell
-ansible [core 2.18.7]
+ansible [core 2.20.4]
   config file = None
   configured module search path = ['/home/ubuntu/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
   ansible python module location = /home/ubuntu/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible
   ansible collection location = /home/ubuntu/.ansible/collections:/usr/share/ansible/collections
   executable location = /home/ubuntu/.local/bin/ansible
-  python version = 3.12.3 (main, Jun 18 2025, 17:59:45) [GCC 13.3.0] (/home/ubuntu/.local/share/pipx/venvs/ansible/bin/python)
+  python version = 3.12.3 (main, Mar  3 2026, 12:15:18) [GCC 13.3.0] (/home/ubuntu/.local/share/pipx/venvs/ansible/bin/python)
   jinja version = 3.1.6
-  libyaml = True
+  pyyaml version = 6.0.3 (with libyaml v0.2.5)
 ```
 
 
@@ -153,7 +154,7 @@ From control node, `ssh` into both managed nodes without password to verify `ssh
 
 ### Building Ansible Inventories
 
-https://docs.ansible.com/ansible/latest/inventory_guide/index.html
+https://docs.ansible.com/projects/ansible/latest/inventory_guide/index.html
 
 ```shell
 mkdir -p ~/ansible-demo/inventory
@@ -174,16 +175,18 @@ ansible all -m ping -i inventory.ini
 ```
 
 ```
-ansible-node1 | SUCCESS => {
+[WARNING]: Host 'ansible-node2' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+ansible-node2 | SUCCESS => {
     "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
+        "discovered_interpreter_python": "/usr/bin/python3.12"
     },
     "changed": false,
     "ping": "pong"
 }
-ansible-node2 | SUCCESS => {
+[WARNING]: Host 'ansible-node1' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
+ansible-node1 | SUCCESS => {
     "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
+        "discovered_interpreter_python": "/usr/bin/python3.12"
     },
     "changed": false,
     "ping": "pong"
@@ -195,16 +198,17 @@ ansible ansible-node1 -m ping -i inventory.ini
 ```
 
 ```
+[WARNING]: Host 'ansible-node1' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
 ansible-node1 | SUCCESS => {
     "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
+        "discovered_interpreter_python": "/usr/bin/python3.12"
     },
     "changed": false,
     "ping": "pong"
 }
 ```
 
-https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#valid-variable-names
+https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_variables.html#valid-variable-names
 
 > [!NOTE]
 >
@@ -224,20 +228,25 @@ ansible-node2 ansible_connection=ssh ansible_user=student ansible_ssh_private_ke
 ansible web_srv_1 -m ping -i inventory.ini
 ```
 ```
+[WARNING]: Host 'ansible-node1' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.20/reference_appendices/interpreter_discovery.html for more information.
 ansible-node1 | SUCCESS => {
     "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python3"
+        "discovered_interpreter_python": "/usr/bin/python3.12"
     },
     "changed": false,
     "ping": "pong"
 }
 ```
 
+> [!NOTE]
+>
+> You can create an `ansible.cfg` file to supress the [WARNING] about Python interpreter. Read on.
+
 #### Adding ranges of hosts
 
 If you have a lot of hosts with a similar pattern, you can add them as a range rather than listing each hostname separately:
 
-```ini
+```
 [web_srv]
 ansible-node[1:2] ansible_connection=ssh ansible_user=student ansible_ssh_private_key_file=~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
 
@@ -254,7 +263,7 @@ ansible-node[1:2] ansible_connection=ssh ansible_user=student ansible_ssh_privat
 
 YAML Tutorial https://spacelift.io/blog/yaml
 
-YAML Syntax https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
+YAML Syntax https://docs.ansible.com/projects/ansible/latest/reference_appendices/YAMLSyntax.html
 
 
 
@@ -264,7 +273,7 @@ YAML Syntax https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyn
 
 ### Using Ansible Playbooks
 
-https://docs.ansible.com/ansible/latest/playbook_guide/index.html
+https://docs.ansible.com/projects/ansible/latest/playbook_guide/index.html
 
 ```shell
 mkdir -p ~/ansible-demo/playbook && cd ~/ansible-demo/playbook
@@ -281,6 +290,8 @@ Host ansible-node1
   IdentityFile              ~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
   ServerAliveInterval       5
   ExitOnForwardFailure      yes
+  StrictHostKeyChecking     no
+  UserKnownHostsFile        /dev/null
 
 Host ansible-node2
   HostName                  IP_ADDRESS_OR_FQDN_OF_NODE2
@@ -289,24 +300,36 @@ Host ansible-node2
   IdentityFile              ~/.ssh/YOUR_SSH_PRIVATE_KEY_FILE
   ServerAliveInterval       5
   ExitOnForwardFailure      yes
+  StrictHostKeyChecking     no
+  UserKnownHostsFile        /dev/null
 ```
 
 Create `inventory.ini` under `~/ansible-demo/playbook/`:
 
-```ini
+```
 [web_srv]
 ansible-node1 ansible_connection=ssh
 ansible-node2 ansible_connection=ssh
 ```
 
+If you have successfully configured passwordless key-based SSH authentication, you can use the simple `inventory.ini` like this:
+
+```
+[web_srv]
+ansible-node1
+ansible-node2
+```
+
 ```
 $ ls -l ~/ansible-demo/playbook/
 total 4
--rw-r--r--. 1 alma alma 84 Jun 18 00:56 inventory.ini
--rw-r--r--. 1 alma alma  0 Jun 18 00:53 playbook1.yaml
+-rw-r--r--. 1 student student 84 Jun 18 00:56 inventory.ini
+-rw-r--r--. 1 student student  0 Jun 18 00:53 playbook1.yaml
 ```
 
-Optional: Create a `ansible.cfg` in current directory to suppress Python interpreter warnings. More on `ansible.cfg` later.
+> [!NOTE]
+>
+> Optional but recommended : Create a `ansible.cfg` in current directory to suppress Python interpreter warnings. More on `ansible.cfg` later.
 
 `ansible.cfg`
 
@@ -329,7 +352,7 @@ interpreter_python = auto_silent
 ansible-playbook playbook1.yaml -i inventory.ini --verbose
 ```
 ```
-No config file found; using defaults
+Using /home/student/ansible-demo/playbook/ansible.cfg as config file
 
 PLAY [play-demo] ************************************************************
 
@@ -348,9 +371,9 @@ ansible-node2              : ok=2    changed=0    unreachable=0    failed=0    s
 
 #### Running playbooks in check mode
 
-https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_checkmode.html
+https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_checkmode.html
 
-Check mode is just a simulation. It will not generate output for tasks that use [conditionals based on registered variables](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html#conditionals-registered-vars) (results of prior tasks). However, it is great for validating configuration management playbooks that run on one node at a time.
+Check mode is just a simulation. It will not generate output for tasks that use [conditionals based on registered variables](https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_conditionals.html#conditionals-registered-vars) (results of prior tasks). However, it is great for validating configuration management playbooks that run on one node at a time.
 
 ```shell
 # You will not see => {"changed": false, "ping": "pong"} in the output
@@ -365,19 +388,17 @@ ansible-playbook --check playbook1.yaml -i inventory.ini
 
 ### Using Ansible modules and plugins
 
-https://docs.ansible.com/ansible/latest/module_plugin_guide/index.html
+https://docs.ansible.com/projects/ansible/latest/module_plugin_guide/index.html
 
-https://docs.ansible.com/ansible/latest/collections/index_module.html
-
-
+https://docs.ansible.com/projects/ansible/latest/collections/index_module.html
 
 You can execute modules from the command line.
 
 #### command – Execute commands on targets
 
-`ansible.builtin.command` module: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
+`ansible.builtin.command` module: https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/command_module.html
 
-This module is part of `ansible-core` and included in all Ansible installations. In most cases, you can use the short module name `command` even without specifying the [collections keyword](https://docs.ansible.com/ansible/latest/collections_guide/collections_using_playbooks.html#collections-keyword). However, we recommend you use the [Fully Qualified Collection Name (FQCN)](https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html#term-Fully-Qualified-Collection-Name-FQCN) `ansible.builtin.command` for easy linking to the module documentation and to avoid conflicting with other collections that may have the same module name.
+This module is part of `ansible-core` and included in all Ansible installations. In most cases, you can use the short module name `command` even without specifying the [collections keyword](https://docs.ansible.com/projects/ansible/latest/collections_guide/collections_using_playbooks.html#collections-keyword). However, we recommend you use the [Fully Qualified Collection Name (FQCN)](https://docs.ansible.com/projects/ansible/latest/reference_appendices/glossary.html#term-Fully-Qualified-Collection-Name-FQCN) `ansible.builtin.command` for easy linking to the module documentation and to avoid conflicting with other collections that may have the same module name.
 
 ```shell
 # Recommended
@@ -389,35 +410,35 @@ ansible web_srv -m command -a "hostnamectl" -i inventory.ini
 
 ```
 ansible-node2 | CHANGED | rc=0 >>
- Static hostname: noble-clone-2
+ Static hostname: ansible-node2
        Icon name: computer-vm
          Chassis: vm
-      Machine ID: d42d70df884b4324a120dbf85247f7a2
-         Boot ID: 43b5ac072a3f4beabcc72edf0cea8280
-  Virtualization: kvm
-Operating System: Ubuntu 24.04.2 LTS
-          Kernel: Linux 6.8.0-62-generic
+      Machine ID: 3b16c6e033cb0de89cbc8a3e69cc81a2
+         Boot ID: 8758624ff6c143f988d093175098b490
+  Virtualization: vmware
+Operating System: Ubuntu 24.04.4 LTS
+          Kernel: Linux 6.8.0-106-generic
     Architecture: x86-64
- Hardware Vendor: QEMU
-  Hardware Model: Standard PC _Q35 + ICH9, 2009_
-Firmware Version: 3.20230228-4
-   Firmware Date: Tue 2023-06-06
-    Firmware Age: 2y 2w 5d
+ Hardware Vendor: VMware, Inc.
+  Hardware Model: VMware Virtual Platform
+Firmware Version: 6.00
+   Firmware Date: Thu 2020-11-12
+    Firmware Age: 5y 4month 2w 4d
 ansible-node1 | CHANGED | rc=0 >>
- Static hostname: noble-clone-1
+ Static hostname: ansible-node1
        Icon name: computer-vm
          Chassis: vm
-      Machine ID: 6d053c6e5f3d48ac898d6091f8f31bfd
-         Boot ID: 4610ac0fe50543f6b0efe0b96c4dc988
-  Virtualization: kvm
-Operating System: Ubuntu 24.04.2 LTS
-          Kernel: Linux 6.8.0-62-generic
+      Machine ID: 62df100dce2ce92150ca4a7a69cc81a3
+         Boot ID: d576849dddfd4a6a94fa6407618b8c3f
+  Virtualization: vmware
+Operating System: Ubuntu 24.04.4 LTS
+          Kernel: Linux 6.8.0-106-generic
     Architecture: x86-64
- Hardware Vendor: QEMU
-  Hardware Model: Standard PC _Q35 + ICH9, 2009_
-Firmware Version: 3.20230228-4
-   Firmware Date: Tue 2023-06-06
-    Firmware Age: 2y 2w 5d
+ Hardware Vendor: VMware, Inc.
+  Hardware Model: VMware Virtual Platform
+Firmware Version: 6.00
+   Firmware Date: Thu 2020-11-12
+    Firmware Age: 5y 4month 2w 4d
 ```
 
 From playbooks, Ansible modules are executed in a very similar way.
@@ -438,19 +459,19 @@ ansible-playbook playbook2.yaml -i inventory.ini --verbose
 ```
 
 ```
-No config file found; using defaults
+Using /home/student/ansible-demo/playbook/ansible.cfg as config file
 
-PLAY [module-demo] **********************************************************************************************************
+PLAY [module-demo] ******************************************************************************************************************************
 
-TASK [Gathering Facts] ******************************************************************************************************
+TASK [Gathering Facts] **************************************************************************************************************************
 ok: [ansible-node1]
 ok: [ansible-node2]
 
-TASK [query hostname and related settings] **********************************************************************************
-changed: [ansible-node2] => {"changed": true, "cmd": ["hostnamectl"], "delta": "0:00:00.162520", "end": "2025-06-25 05:38:45.803362", "msg": "", "rc": 0, "start": "2025-06-25 05:38:45.640842", "stderr": "", "stderr_lines": [], "stdout": " Static hostname: noble-clone-2\n       Icon name: computer-vm\n         Chassis: vm \n      Machine ID: d42d70df884b4324a120dbf85247f7a2\n         Boot ID: 43b5ac072a3f4beabcc72edf0cea8280\n  Virtualization: kvm\nOperating System: Ubuntu 24.04.2 LTS\n          Kernel: Linux 6.8.0-62-generic\n    Architecture: x86-64\n Hardware Vendor: QEMU\n  Hardware Model: Standard PC _Q35 + ICH9, 2009_\nFirmware Version: 3.20230228-4\n   Firmware Date: Tue 2023-06-06\n    Firmware Age: 2y 2w 5d", "stdout_lines": [" Static hostname: noble-clone-2", "       Icon name: computer-vm", "         Chassis: vm ", "      Machine ID: d42d70df884b4324a120dbf85247f7a2", "         Boot ID: 43b5ac072a3f4beabcc72edf0cea8280", "  Virtualization: kvm", "Operating System: Ubuntu 24.04.2 LTS", "          Kernel: Linux 6.8.0-62-generic", "    Architecture: x86-64", " Hardware Vendor: QEMU", "  Hardware Model: Standard PC _Q35 + ICH9, 2009_", "Firmware Version: 3.20230228-4", "   Firmware Date: Tue 2023-06-06", "    Firmware Age: 2y 2w 5d"]}
-changed: [ansible-node1] => {"changed": true, "cmd": ["hostnamectl"], "delta": "0:00:00.178076", "end": "2025-06-25 05:38:45.831380", "msg": "", "rc": 0, "start": "2025-06-25 05:38:45.653304", "stderr": "", "stderr_lines": [], "stdout": " Static hostname: noble-clone-1\n       Icon name: computer-vm\n         Chassis: vm \n      Machine ID: 6d053c6e5f3d48ac898d6091f8f31bfd\n         Boot ID: 4610ac0fe50543f6b0efe0b96c4dc988\n  Virtualization: kvm\nOperating System: Ubuntu 24.04.2 LTS\n          Kernel: Linux 6.8.0-62-generic\n    Architecture: x86-64\n Hardware Vendor: QEMU\n  Hardware Model: Standard PC _Q35 + ICH9, 2009_\nFirmware Version: 3.20230228-4\n   Firmware Date: Tue 2023-06-06\n    Firmware Age: 2y 2w 5d", "stdout_lines": [" Static hostname: noble-clone-1", "       Icon name: computer-vm", "         Chassis: vm ", "      Machine ID: 6d053c6e5f3d48ac898d6091f8f31bfd", "         Boot ID: 4610ac0fe50543f6b0efe0b96c4dc988", "  Virtualization: kvm", "Operating System: Ubuntu 24.04.2 LTS", "          Kernel: Linux 6.8.0-62-generic", "    Architecture: x86-64", " Hardware Vendor: QEMU", "  Hardware Model: Standard PC _Q35 + ICH9, 2009_", "Firmware Version: 3.20230228-4", "   Firmware Date: Tue 2023-06-06", "    Firmware Age: 2y 2w 5d"]}
+TASK [query hostname and related settings] ******************************************************************************************************
+changed: [ansible-node2] => {"changed": true, "cmd": ["hostnamectl"], "delta": "0:00:00.163899", "end": "2026-03-31 20:53:51.201324", "msg": "", "rc": 0, "start": "2026-03-31 20:53:51.037425", "stderr": "", "stderr_lines": [], "stdout": " Static hostname: ansible-node2\n       Icon name: computer-vm\n         Chassis: vm 🖴\n      Machine ID: 3b16c6e033cb0de89cbc8a3e69cc81a2\n         Boot ID: 8758624ff6c143f988d093175098b490\n  Virtualization: vmware\nOperating System: Ubuntu 24.04.4 LTS\n          Kernel: Linux 6.8.0-106-generic\n    Architecture: x86-64\n Hardware Vendor: VMware, Inc.\n  Hardware Model: VMware Virtual Platform\nFirmware Version: 6.00\n   Firmware Date: Thu 2020-11-12\n    Firmware Age: 5y 4month 2w 4d", "stdout_lines": [" Static hostname: ansible-node2", "       Icon name: computer-vm", "         Chassis: vm 🖴", "      Machine ID: 3b16c6e033cb0de89cbc8a3e69cc81a2", "         Boot ID: 8758624ff6c143f988d093175098b490", "  Virtualization: vmware", "Operating System: Ubuntu 24.04.4 LTS", "          Kernel: Linux 6.8.0-106-generic", "    Architecture: x86-64", " Hardware Vendor: VMware, Inc.", "  Hardware Model: VMware Virtual Platform", "Firmware Version: 6.00", "   Firmware Date: Thu 2020-11-12", "    Firmware Age: 5y 4month 2w 4d"]}
+changed: [ansible-node1] => {"changed": true, "cmd": ["hostnamectl"], "delta": "0:00:00.147696", "end": "2026-03-31 20:53:51.237602", "msg": "", "rc": 0, "start": "2026-03-31 20:53:51.089906", "stderr": "", "stderr_lines": [], "stdout": " Static hostname: ansible-node1\n       Icon name: computer-vm\n         Chassis: vm 🖴\n      Machine ID: 62df100dce2ce92150ca4a7a69cc81a3\n         Boot ID: d576849dddfd4a6a94fa6407618b8c3f\n  Virtualization: vmware\nOperating System: Ubuntu 24.04.4 LTS\n          Kernel: Linux 6.8.0-106-generic\n    Architecture: x86-64\n Hardware Vendor: VMware, Inc.\n  Hardware Model: VMware Virtual Platform\nFirmware Version: 6.00\n   Firmware Date: Thu 2020-11-12\n    Firmware Age: 5y 4month 2w 4d", "stdout_lines": [" Static hostname: ansible-node1", "       Icon name: computer-vm", "         Chassis: vm 🖴", "      Machine ID: 62df100dce2ce92150ca4a7a69cc81a3", "         Boot ID: d576849dddfd4a6a94fa6407618b8c3f", "  Virtualization: vmware", "Operating System: Ubuntu 24.04.4 LTS", "          Kernel: Linux 6.8.0-106-generic", "    Architecture: x86-64", " Hardware Vendor: VMware, Inc.", "  Hardware Model: VMware Virtual Platform", "Firmware Version: 6.00", "   Firmware Date: Thu 2020-11-12", "    Firmware Age: 5y 4month 2w 4d"]}
 
-PLAY RECAP ******************************************************************************************************************
+PLAY RECAP **************************************************************************************************************************************
 ansible-node1              : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ansible-node2              : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
@@ -478,7 +499,7 @@ ansible-doc command
         `">"', `"|"', `";"' and `"&"' will not work. Use the [ansible.builtin.shell] module if you
         need these features. To create `command' tasks that are easier to read than the ones using
         space-delimited arguments, pass parameters using the `args' task keyword
-        <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#task>
+        <https://docs.ansible.com/projects/ansible/latest/reference_appendices/playbooks_keywords.html#task>
         or use `cmd' parameter. Either a free form command or `cmd' parameter is required, see the
         examples. For Windows targets, use the [ansible.windows.win_command] module instead.
 
@@ -490,7 +511,7 @@ ADDED IN: historical
 
 #### debug – Print statements during execution
 
-https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/debug_module.html
 
 - This module prints statements during execution and can be useful for debugging variables or expressions without necessarily halting the playbook.
 - Useful for debugging together with the `when:` directive.
@@ -537,7 +558,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 
 ### Using Variables
 
-https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html
+https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_variables.html
 
 `playbook4.yaml`
 
@@ -581,7 +602,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 
 #### Defining variables in included files and roles
 
-https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#defining-variables-in-included-files-and-roles
+https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_variables.html#defining-variables-in-included-files-and-roles
 
 ```shell
 mkdir -p ~/ansible-demo/playbook/vars
@@ -644,7 +665,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 
 ### Loops
 
-https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html
+https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_loops.html
 
 ```shell
 mkdir -p ~/ansible-demo/playbook/vars
@@ -867,7 +888,7 @@ localhost                  : ok=2    changed=0    unreachable=0    failed=0    s
 
 ### Organizing host and group variables
 
-https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#organizing-host-and-group-variables
+https://docs.ansible.com/projects/ansible/latest/inventory_guide/intro_inventory.html#organizing-host-and-group-variables
 
 Content of `inventory.ini` file:
 
@@ -1033,11 +1054,11 @@ ansible-node2              : ok=1    changed=0    unreachable=0    failed=0    s
 
 ### ansible.cfg
 
-https://docs.ansible.com/ansible/latest/reference_appendices/config.html
+https://docs.ansible.com/projects/ansible/latest/reference_appendices/config.html
 
-Ansible supports several sources for configuring its behavior, including an ini file named `ansible.cfg`, environment variables, command-line options, playbook keywords, and variables. See [Controlling how Ansible behaves: precedence rules](https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html#general-precedence-rules) for details on the relative precedence of each source.
+Ansible supports several sources for configuring its behavior, including an ini file named `ansible.cfg`, environment variables, command-line options, playbook keywords, and variables. See [Controlling how Ansible behaves: precedence rules](https://docs.ansible.com/projects/ansible/latest/reference_appendices/general_precedence.html#general-precedence-rules) for details on the relative precedence of each source.
 
-The `ansible-config` utility allows users to see all the configuration settings available, their defaults, how to set them and where their current value comes from. See [ansible-config](https://docs.ansible.com/ansible/latest/cli/ansible-config.html#ansible-config) for more information.
+The `ansible-config` utility allows users to see all the configuration settings available, their defaults, how to set them and where their current value comes from. See [ansible-config](https://docs.ansible.com/projects/ansible/latest/cli/ansible-config.html#ansible-config) for more information.
 
 #### The configuration file
 
@@ -1080,9 +1101,9 @@ ansible-playbook playbook9.yaml
 
 ### ansible.builtin.copy module – Copy files to remote locations
 
-https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
+https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/copy_module.html
 
-The [ansible.builtin.copy](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html#ansible-collections-ansible-builtin-copy-module) module copies a file or a directory structure from the local or remote machine to a location on the remote machine. File system meta-information (permissions, ownership, etc.) may be set, even when the file or directory already exists on the target system. Some meta-information may be copied on request.
+The [ansible.builtin.copy](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/copy_module.html#ansible-collections-ansible-builtin-copy-module) module copies a file or a directory structure from the local or remote machine to a location on the remote machine. File system meta-information (permissions, ownership, etc.) may be set, even when the file or directory already exists on the target system. Some meta-information may be copied on request.
 
 ```shell
 echo "demo" > ~/ansible-demo/playbook/demo.conf
@@ -1147,9 +1168,9 @@ demo
 
 ### ansible.builtin.fetch module – Fetch files from remote nodes
 
-https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fetch_module.html
+https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/fetch_module.html
 
-This module works like ansible.builtin.copy, but in reverse. It is used for fetching files from remote machines and storing them locally in a file tree, organized by hostname. Files that already exist at `dest` will be overwritten if they are different than the `src`.
+This module works like [ansible.builtin.copy](https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/copy_module.html#ansible-collections-ansible-builtin-copy-module), but in reverse. It is used for fetching files from remote machines and storing them locally in a file tree, organized by hostname. Files that already exist at `dest` will be overwritten if they are different than the `src`.
 
 `playbook11.yaml`
 
@@ -1177,7 +1198,7 @@ If `dest=/tmp`, then `src=/home/student/demo.conf` on node `ansible-node1`, woul
 
 ### Registering variables
 
-https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#registering-variables
+https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_variables.html#registering-variables
 
 You can create variables from the output of an Ansible task with the task keyword `register`. You can use **register**ed variables in any later tasks in your play. 
 
@@ -1206,7 +1227,7 @@ You can create variables from the output of an Ansible task with the task keywor
 >
 > `delegate_to: localhost` in the "read a file to output" task is necessary. Without this line, Ansible will run the `cat "/tmp/ansible-node1/home/student/demo.conf"` command on managed nodes, which don't have the files in `/tmp` directory.
 >
-> Read more on [Controlling where tasks run: delegation and local actions](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_delegation.html#controlling-where-tasks-run-delegation-and-local-actions)
+> Read more on [Controlling where tasks run: delegation and local actions](https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_delegation.html#controlling-where-tasks-run-delegation-and-local-actions)
 
 
 
@@ -1216,7 +1237,7 @@ You can create variables from the output of an Ansible task with the task keywor
 
 ### ansible.builtin.lineinfile module – Manage lines in text files
 
-https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_module.html
+https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/lineinfile_module.html
 
 This module ensures a particular line is in a file, or replace an existing line using a back-referenced regular expression. This is primarily useful when you want to change a single line in a file only.
 
@@ -1286,13 +1307,13 @@ To make the code more robust, first ensure the line that contains the hostname "
 
 ### Understanding privilege escalation: become
 
-https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
+https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_privilege_escalation.html
 
 Ansible uses existing privilege escalation systems to execute tasks with root privileges or with another user’s permissions. Because this feature allows you to "become" another user, different from the user that logged into the machine (remote user), we call it `become`. The `become` keyword uses existing privilege escalation tools like `sudo`, `su`, `pfexec`, `doas`, `pbrun`, `dzdo`, `ksu`, `runas`, `machinectl` and others.
 
 **ansible.builtin.apt module**
 
-https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+https://docs.ansible.com/projects/ansible/latest/collections/ansible/builtin/apt_module.html
 
 Manages apt packages (such as for Debian/Ubuntu).
 
