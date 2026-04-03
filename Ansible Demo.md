@@ -1393,13 +1393,20 @@ Jun 18 01:49:06 ansible-node1 systemd[1]: Started lighttpd.service - Lighttpd Da
 curl http://ansible-node1
 ```
 
-```
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-...
+```html
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>403 Forbidden</title>
+ </head>
+ <body>
+  <h1>403 Forbidden</h1>
+ </body>
+</html>
 ```
 
-You can create two tasks in a playbook: one to install an HTTP server daemon and another to copy the `index.html` file to the web server. Simply add another task block under `tasks`.
+The `/var/www/html/` directory is empty (no `index.html` or other HTML files present), so lighttpd returns a 403 Forbidden response. The web server itself is installed and running without issues. You can create two tasks in a playbook: one to install an HTTP server daemon and another to copy the `index.html` file to the web server. Simply add another task block under `tasks`.
 
 Create a local `index.html`:
 
