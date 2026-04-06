@@ -119,13 +119,13 @@ Credit: https://developer.ibm.com/articles/au-sshsecurity/
 > Example outputs of `ssh -V` command:
 >
 > ```
-> # On macOS Tahoe 26.2
-> OpenSSH_10.0p2, LibreSSL 3.3.6
+> # On macOS Tahoe 26.4
+> OpenSSH_10.2p1, LibreSSL 3.3.6
 > 
-> # On Ubuntu Linux 24.04.3 LTS
-> OpenSSH_9.6p1 Ubuntu-3ubuntu13.14, OpenSSL 3.0.13 30 Jan 2024
+> # On Ubuntu Linux 24.04.4 LTS
+> OpenSSH_9.6p1 Ubuntu-3ubuntu13.15, OpenSSL 3.0.13 30 Jan 2024
 > 
-> # On Windows Server 2022
+> # On Windows Server 2022/2025
 > OpenSSH_for_Windows_9.5p2, LibreSSL 3.8.2
 > ```
 
