@@ -1160,6 +1160,22 @@ demo
 >
 > You can also use `content: "YOUR_CONTENT_HERE"` to replace `src: demo.conf` in `copy` module.
 
+You can combine `ansible.builtin.copy` module and `ansible.builtin.command` module to send a shell/Python script to managed nodes and execute them remotely.
+
+```yaml
+- name: Copy and execute custom_task.sh on all nodes
+  hosts: all
+  tasks:
+    - name: Copy custom_task.sh to remote nodes
+      ansible.builtin.copy:
+        src: custom_task.sh
+        dest: /tmp/custom_task.sh
+        mode: '0755'
+
+    - name: Execute the custom_task.sh script
+      ansible.builtin.command: /tmp/custom_task.sh
+```
+
 
 
 ---
@@ -1471,7 +1487,36 @@ curl http://ansible-node1
 Peter Parker was here
 ```
 
+You need privilege escalation to update a managed node.
 
+This playbook connects to all machines in the `rhel_nodes` group, elevates privileges, and then uses the `YUM/DNF` package manager to update every installed package to its newest version. This is a common way to keep RHEL-based systems up-to-date.
+
+```yaml
+- name: Update RHEL nodes
+  hosts: rhel_nodes
+  become: yes
+  tasks:
+    - name: Update all packages to the latest version
+      yum:
+        name: "*"
+        state: latest
+```
+
+This playbook first updates the package list on all hosts in the `ubuntu_nodes` group and then upgrades all installed packages to their latest versions, ensuring the systems are up-to-date.
+
+```yaml
+- name: Update Ubuntu nodes
+  hosts: ubuntu_nodes
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Upgrade all packages to the latest version
+      apt:
+        upgrade: dist
+```
 
 
 
